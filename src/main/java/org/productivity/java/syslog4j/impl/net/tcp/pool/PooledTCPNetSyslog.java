@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.net.tcp.pool;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
 import org.productivity.java.syslog4j.impl.net.tcp.TCPNetSyslog;
@@ -18,7 +19,7 @@ import org.productivity.java.syslog4j.impl.pool.generic.GenericSyslogPoolFactory
 * @version $Id: PooledTCPNetSyslog.java,v 1.5 2008/12/10 04:30:15 cvs Exp $
 */
 public class PooledTCPNetSyslog extends TCPNetSyslog {
-	private static final long serialVersionUID = 4279960451141784200L;
+	@Serial private static final long serialVersionUID = 4279960451141784200L;
 	
 	protected AbstractSyslogPoolFactory poolFactory = null;
 
@@ -31,16 +32,14 @@ public class PooledTCPNetSyslog extends TCPNetSyslog {
 	}
 	
 	protected AbstractSyslogPoolFactory createSyslogPoolFactory() {
-		AbstractSyslogPoolFactory syslogPoolFactory = new GenericSyslogPoolFactory();
-		
-		return syslogPoolFactory;
+
+        return new GenericSyslogPoolFactory();
 	}
 
 	public AbstractSyslogWriter getWriter() {
 		try {
-			AbstractSyslogWriter syslogWriter = this.poolFactory.borrowSyslogWriter();
-		
-			return syslogWriter;
+
+            return this.poolFactory.borrowSyslogWriter();
 			
 		} catch (Exception e) {
 			throw new SyslogRuntimeException(e);

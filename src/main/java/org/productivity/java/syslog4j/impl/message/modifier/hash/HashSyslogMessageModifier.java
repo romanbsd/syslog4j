@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.hash;
 
+import java.io.Serial;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -22,42 +23,37 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: HashSyslogMessageModifier.java,v 1.5 2010/10/28 05:10:57 cvs Exp $
 */
 public class HashSyslogMessageModifier extends AbstractSyslogMessageModifier {
-	private static final long serialVersionUID = 7335757344826206953L;
+	@Serial private static final long serialVersionUID = 7335757344826206953L;
 	
-	protected HashSyslogMessageModifierConfig config = null;
+	protected final HashSyslogMessageModifierConfig config;
 	
-	public static final HashSyslogMessageModifier createMD5() {
-		HashSyslogMessageModifier md5 = new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createMD5());
-		
-		return md5;
+	public static HashSyslogMessageModifier createMD5() {
+
+        return new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createMD5());
 	}
 	
-	public static final HashSyslogMessageModifier createSHA1() {
-		HashSyslogMessageModifier sha1 = new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA1());
-		
-		return sha1;
+	public static HashSyslogMessageModifier createSHA1() {
+
+        return new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA1());
 	}
 	
-	public static final HashSyslogMessageModifier createSHA160() {
+	public static HashSyslogMessageModifier createSHA160() {
 		 return createSHA1();
 	}
 	
-	public static final HashSyslogMessageModifier createSHA256() {
-		HashSyslogMessageModifier sha256 = new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA256());
-		
-		return sha256;
+	public static HashSyslogMessageModifier createSHA256() {
+
+        return new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA256());
 	}
 	
-	public static final HashSyslogMessageModifier createSHA384() {
-		HashSyslogMessageModifier sha384 = new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA384());
-		
-		return sha384;
+	public static HashSyslogMessageModifier createSHA384() {
+
+        return new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA384());
 	}
 	
-	public static final HashSyslogMessageModifier createSHA512() {
-		HashSyslogMessageModifier sha512 = new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA512());
-		
-		return sha512;
+	public static HashSyslogMessageModifier createSHA512() {
+
+        return new HashSyslogMessageModifier(HashSyslogMessageModifierConfig.createSHA512());
 	}
 	
 	public HashSyslogMessageModifier(HashSyslogMessageModifierConfig config) throws SyslogRuntimeException {
@@ -82,7 +78,7 @@ public class HashSyslogMessageModifier extends AbstractSyslogMessageModifier {
 	}
 	
 	protected MessageDigest obtainMessageDigest() {
-		MessageDigest digest = null;
+		MessageDigest digest;
 		
 		try {
 			digest = MessageDigest.getInstance(this.config.getHashAlgorithm());
@@ -106,13 +102,9 @@ public class HashSyslogMessageModifier extends AbstractSyslogMessageModifier {
 
 		String digestString = Base64.encodeBytes(digestBytes,Base64.DONT_BREAK_LINES);
 
-		StringBuffer buffer = new StringBuffer(message);
-		
-		buffer.append(this.config.getPrefix());
-		buffer.append(digestString);
-		buffer.append(this.config.getSuffix());
-		
-		return buffer.toString();
+        return message + this.config.getPrefix()
+				+ digestString
+				+ this.config.getSuffix();
 	}
 
 	public boolean verify(String message, String base64Hash) {

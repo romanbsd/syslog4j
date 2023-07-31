@@ -1,5 +1,7 @@
 package org.productivity.java.syslog4j.impl.unix.socket;
 
+import java.io.Serial;
+import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslogConfig;
 
@@ -15,7 +17,7 @@ import org.productivity.java.syslog4j.impl.AbstractSyslogConfig;
 * @version $Id: UnixSocketSyslogConfig.java,v 1.8 2010/11/12 03:43:12 cvs Exp $
 */
 public class UnixSocketSyslogConfig extends AbstractSyslogConfig {
-	private static final long serialVersionUID = -3145794243736015707L;
+	@Serial private static final long serialVersionUID = -3145794243736015707L;
 
 	protected int type = SYSLOG_SOCKET_TYPE_DEFAULT; 
 	protected short family = SYSLOG_SOCKET_FAMILY_DEFAULT;
@@ -29,7 +31,7 @@ public class UnixSocketSyslogConfig extends AbstractSyslogConfig {
 		this.setIdent("java");
 	}
 	
-	public Class getSyslogClass() {
+	public Class<? extends SyslogIF> getSyslogClass() {
 		return UnixSocketSyslog.class;
 	}
 

@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.text;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 
@@ -15,7 +16,7 @@ import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 * @version $Id: SuffixSyslogMessageModifier.java,v 1.5 2010/10/28 05:10:57 cvs Exp $
 */
 public class SuffixSyslogMessageModifier implements SyslogMessageModifierIF {
-	private static final long serialVersionUID = 7160593302741507576L;
+	@Serial private static final long serialVersionUID = 7160593302741507576L;
 	
 	protected String suffix = null;
 	protected String delimiter = " ";
@@ -44,7 +45,7 @@ public class SuffixSyslogMessageModifier implements SyslogMessageModifierIF {
 	}
 
 	public String modify(SyslogIF syslog, int facility, int level, String message) {
-		if (this.suffix == null || "".equals(this.suffix.trim())) {
+		if (this.suffix == null || this.suffix.trim().isEmpty()) {
 			return message;
 		}
 

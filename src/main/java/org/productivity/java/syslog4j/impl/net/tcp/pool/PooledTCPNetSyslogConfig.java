@@ -1,6 +1,8 @@
 package org.productivity.java.syslog4j.impl.net.tcp.pool;
 
+import java.io.Serial;
 import org.apache.commons.pool.impl.GenericObjectPool;
+import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogPoolConfigIF;
 import org.productivity.java.syslog4j.impl.net.tcp.TCPNetSyslogConfig;
 
@@ -16,7 +18,7 @@ import org.productivity.java.syslog4j.impl.net.tcp.TCPNetSyslogConfig;
 * @version $Id: PooledTCPNetSyslogConfig.java,v 1.3 2008/11/26 15:01:47 cvs Exp $
 */
 public class PooledTCPNetSyslogConfig extends TCPNetSyslogConfig implements SyslogPoolConfigIF {
-	private static final long serialVersionUID = 2283355983363422888L;
+	@Serial private static final long serialVersionUID = 2283355983363422888L;
 	
 	protected int maxActive							= SYSLOG_POOL_CONFIG_MAX_ACTIVE_DEFAULT;
 	protected int maxIdle							= SYSLOG_POOL_CONFIG_MAX_IDLE_DEFAULT;
@@ -166,7 +168,7 @@ public class PooledTCPNetSyslogConfig extends TCPNetSyslogConfig implements Sysl
 		this.testWhileIdle = testWhileIdle;
 	}
 
-	public Class getSyslogClass() {
+	public Class<? extends SyslogIF> getSyslogClass() {
 		return PooledTCPNetSyslog.class;
 	}
 }

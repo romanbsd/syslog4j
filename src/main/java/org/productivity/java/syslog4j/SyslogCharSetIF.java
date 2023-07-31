@@ -14,6 +14,6 @@ import java.io.Serializable;
 * @version $Id: SyslogCharSetIF.java,v 1.3 2008/11/07 15:15:41 cvs Exp $
 */
 public interface SyslogCharSetIF extends Serializable {
-	public String getCharSet();
-	public void setCharSet(String charSet);
+	String getCharSet();
+	void setCharSet(String charSet);
 }

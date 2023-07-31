@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.processor;
 
+import java.io.Serial;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -21,8 +22,8 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: AbstractSyslogMessageProcessor.java,v 1.2 2010/11/28 04:15:18 cvs Exp $
 */
 public abstract class AbstractSyslogMessageProcessor implements SyslogMessageProcessorIF, SyslogConstants {
-	private static final long serialVersionUID = -5413127301924500938L;
-	protected String localName = null;
+	@Serial private static final long serialVersionUID = -5413127301924500938L;
+	protected final String localName;
 	
 	public AbstractSyslogMessageProcessor() {
 		this.localName = SyslogUtility.getLocalName();

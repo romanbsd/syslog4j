@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message;
 
+import java.io.Serial;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -23,7 +24,7 @@ import org.productivity.java.syslog4j.SyslogMessageIF;
 * @version $Id: AbstractSyslogMessage.java,v 1.2 2009/04/17 02:37:04 cvs Exp $
 */
 public abstract class AbstractSyslogMessage implements SyslogMessageIF {
-	private static final long serialVersionUID = 414124277626756491L;
+	@Serial private static final long serialVersionUID = 414124277626756491L;
 
 	public static final String UNDEFINED = "undefined";
 	
@@ -50,15 +51,13 @@ public abstract class AbstractSyslogMessage implements SyslogMessageIF {
 	}
 	
 	protected String generateDate() {
-		String date = new SimpleDateFormat(getDateFormat()).format(new Date());
-		
-		return date;
+
+        return new SimpleDateFormat(getDateFormat()).format(new Date());
 	}
 
 	protected String generateTime() {
-		String time = new SimpleDateFormat(getTimeFormat()).format(new Date());
-		
-		return time;
+
+        return new SimpleDateFormat(getTimeFormat()).format(new Date());
 	}
 
 	protected String[] generateDateAndTime(Date date) {
@@ -84,17 +83,15 @@ public abstract class AbstractSyslogMessage implements SyslogMessageIF {
 	}
 
 	protected boolean nullOrEmpty(String value) {
-		return (value == null || "".equals(value.trim()));
+		return (value == null || value.trim().isEmpty());
 	}
 
 	protected String replaceDelimiter(String fieldName, String fieldValue, char delimiter, String replaceDelimiter) {
-		if (replaceDelimiter == null || replaceDelimiter.length() < 1 || fieldValue == null || fieldValue.length() < 1) {
+		if (replaceDelimiter == null || replaceDelimiter.isEmpty() || fieldValue == null || fieldValue.isEmpty()) {
 			return fieldValue;
 		}
-		
-		String newFieldValue = fieldValue.replaceAll("\\" + delimiter, replaceDelimiter);
-		
-		return newFieldValue;
+
+        return fieldValue.replaceAll("\\" + delimiter, replaceDelimiter);
 	}
 
 	public abstract String createMessage();

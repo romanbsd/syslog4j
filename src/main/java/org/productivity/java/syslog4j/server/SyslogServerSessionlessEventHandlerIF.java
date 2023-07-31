@@ -15,6 +15,6 @@ import java.net.SocketAddress;
 * @version $Id: SyslogServerSessionlessEventHandlerIF.java,v 1.1 2010/11/12 02:56:44 cvs Exp $
 */
 public interface SyslogServerSessionlessEventHandlerIF extends SyslogServerEventHandlerIF {
-	public void event(SyslogServerIF syslogServer, SocketAddress socketAddress, SyslogServerEventIF event);
-	public void exception(SyslogServerIF syslogServer, SocketAddress socketAddress, Exception exception);
+	void event(SyslogServerIF syslogServer, SocketAddress socketAddress, SyslogServerEventIF event);
+	void exception(SyslogServerIF syslogServer, SocketAddress socketAddress, Exception exception);
 }

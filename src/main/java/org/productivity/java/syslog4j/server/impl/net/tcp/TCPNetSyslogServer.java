@@ -31,9 +31,9 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 */
 public class TCPNetSyslogServer extends AbstractSyslogServer {
 	public static class TCPNetSyslogSocketHandler implements Runnable {
-		protected SyslogServerIF server = null;
-		protected Socket socket = null;
-		protected Sessions sessions = null;
+		protected final SyslogServerIF server;
+		protected final Socket socket;
+		protected final Sessions sessions;
 		
 		public TCPNetSyslogSocketHandler(Sessions sessions, SyslogServerIF server, Socket socket) {
 			this.sessions = sessions;
@@ -57,7 +57,7 @@ public class TCPNetSyslogServer extends AbstractSyslogServer {
 					AbstractSyslogServer.handleSessionOpen(this.sessions,this.server,this.socket);
 				}
 				
-				while (line != null && line.length() != 0) {
+				while (line != null && !line.isEmpty()) {
 					SyslogServerEventIF event = createEvent(this.server.getConfig(),line,this.socket.getInetAddress());
 					
 					AbstractSyslogServer.handleEvent(this.sessions,this.server,this.socket,event);
@@ -102,8 +102,7 @@ public class TCPNetSyslogServer extends AbstractSyslogServer {
 	protected TCPNetSyslogServerConfigIF tcpNetSyslogServerConfig = null;
 	
 	public void initialize() throws SyslogRuntimeException {
-		this.tcpNetSyslogServerConfig = null;
-		
+
 		try {
 			this.tcpNetSyslogServerConfig = (TCPNetSyslogServerConfigIF) this.syslogServerConfig;
 			
@@ -137,11 +136,11 @@ public class TCPNetSyslogServer extends AbstractSyslogServer {
 			}
 			
 			synchronized(this.sessions) {
-				Iterator i = this.sessions.getSockets();
+				Iterator<Socket> i = this.sessions.getSockets();
 	
 				if (i != null) {
 					while(i.hasNext()) {
-						Socket s = (Socket) i.next();
+						Socket s = i.next();
 						
 						s.close();
 					}
@@ -158,14 +157,13 @@ public class TCPNetSyslogServer extends AbstractSyslogServer {
 		}
 	}
 
-	protected ServerSocketFactory getServerSocketFactory() throws IOException {
-		ServerSocketFactory serverSocketFactory = ServerSocketFactory.getDefault();
-		
-		return serverSocketFactory;
+	protected ServerSocketFactory getServerSocketFactory() {
+
+        return ServerSocketFactory.getDefault();
 	}
 	
 	protected ServerSocket createServerSocket() throws IOException {
-		ServerSocket newServerSocket = null;
+		ServerSocket newServerSocket;
 		
 		ServerSocketFactory factory = getServerSocketFactory();
 		
@@ -191,9 +189,6 @@ public class TCPNetSyslogServer extends AbstractSyslogServer {
 			this.serverSocket = createServerSocket();
 			this.shutdown = false;
 			
-		} catch (SocketException se) {
-			throw new SyslogRuntimeException(se);
-
 		} catch (IOException ioe) {
 			throw new SyslogRuntimeException(ioe);
 		}

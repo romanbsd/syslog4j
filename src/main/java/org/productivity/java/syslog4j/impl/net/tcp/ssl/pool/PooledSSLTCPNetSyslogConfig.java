@@ -1,5 +1,8 @@
 package org.productivity.java.syslog4j.impl.net.tcp.ssl.pool;
 
+import java.io.Serial;
+import org.productivity.java.syslog4j.SyslogIF;
+import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
 import org.productivity.java.syslog4j.impl.net.tcp.pool.PooledTCPNetSyslogConfig;
 import org.productivity.java.syslog4j.impl.net.tcp.ssl.SSLTCPNetSyslog;
 import org.productivity.java.syslog4j.impl.net.tcp.ssl.SSLTCPNetSyslogConfigIF;
@@ -17,7 +20,7 @@ import org.productivity.java.syslog4j.impl.net.tcp.ssl.SSLTCPNetSyslogWriter;
 * @version $Id: PooledSSLTCPNetSyslogConfig.java,v 1.2 2009/03/29 17:38:58 cvs Exp $
 */
 public class PooledSSLTCPNetSyslogConfig extends PooledTCPNetSyslogConfig implements SSLTCPNetSyslogConfigIF {
-	private static final long serialVersionUID = 2092268298395023976L;
+	@Serial private static final long serialVersionUID = 2092268298395023976L;
 
 	protected String keyStore = null;
 	protected String keyStorePassword = null;
@@ -81,11 +84,11 @@ public class PooledSSLTCPNetSyslogConfig extends PooledTCPNetSyslogConfig implem
 		this.trustStorePassword = trustStorePassword;
 	}
 
-	public Class getSyslogClass() {
+	public Class<? extends SyslogIF> getSyslogClass() {
 		return SSLTCPNetSyslog.class;
 	}
 
-	public Class getSyslogWriterClass() {
+	public Class<? extends AbstractSyslogWriter> getSyslogWriterClass() {
 		return SSLTCPNetSyslogWriter.class;
 	}
 }

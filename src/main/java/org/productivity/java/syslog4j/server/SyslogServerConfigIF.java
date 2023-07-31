@@ -18,33 +18,33 @@ import org.productivity.java.syslog4j.SyslogRuntimeException;
 * @version $Id: SyslogServerConfigIF.java,v 1.12 2011/01/11 05:11:13 cvs Exp $
 */
 public interface SyslogServerConfigIF extends SyslogConstants, SyslogCharSetIF {
-	public Class getSyslogServerClass();
+	Class<? extends SyslogServerIF> getSyslogServerClass();
 
-	public String getHost();
-	public void setHost(String host) throws SyslogRuntimeException;
+	String getHost();
+	void setHost(String host) throws SyslogRuntimeException;
 
-	public int getPort();
-	public void setPort(int port) throws SyslogRuntimeException;
+	int getPort();
+	void setPort(int port) throws SyslogRuntimeException;
 	
-	public boolean isUseDaemonThread();
-	public void setUseDaemonThread(boolean useDaemonThread);
+	boolean isUseDaemonThread();
+	void setUseDaemonThread(boolean useDaemonThread);
 	
-	public int getThreadPriority();
-	public void setThreadPriority(int threadPriority);
+	int getThreadPriority();
+	void setThreadPriority(int threadPriority);
 	
-	public List getEventHandlers();
+	List<SyslogServerEventHandlerIF> getEventHandlers();
 	
-	public long getShutdownWait();
-	public void setShutdownWait(long shutdownWait);
+	long getShutdownWait();
+	void setShutdownWait(long shutdownWait);
 	
-	public void addEventHandler(SyslogServerEventHandlerIF eventHandler);
-	public void insertEventHandler(int pos, SyslogServerEventHandlerIF eventHandler);
-	public void removeEventHandler(SyslogServerEventHandlerIF eventHandler);
-	public void removeAllEventHandlers();
+	void addEventHandler(SyslogServerEventHandlerIF eventHandler);
+	void insertEventHandler(int pos, SyslogServerEventHandlerIF eventHandler);
+	void removeEventHandler(SyslogServerEventHandlerIF eventHandler);
+	void removeAllEventHandlers();
 	
-	public boolean isUseStructuredData();
-	public void setUseStructuredData(boolean useStructuredData);
+	boolean isUseStructuredData();
+	void setUseStructuredData(boolean useStructuredData);
 	
-	public Object getDateTimeFormatter();
-	public void setDateTimeFormatter(Object dateTimeFormatter);
+	Object getDateTimeFormatter();
+	void setDateTimeFormatter(Object dateTimeFormatter);
 }

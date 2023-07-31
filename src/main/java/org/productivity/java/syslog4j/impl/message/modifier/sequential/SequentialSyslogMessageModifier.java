@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.sequential;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 
@@ -15,16 +16,15 @@ import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 * @version $Id: SequentialSyslogMessageModifier.java,v 1.8 2010/11/28 04:43:31 cvs Exp $
 */
 public class SequentialSyslogMessageModifier implements SyslogMessageModifierIF {
-	private static final long serialVersionUID = 6107735010240030785L;
+	@Serial private static final long serialVersionUID = 6107735010240030785L;
 	
-	protected SequentialSyslogMessageModifierConfig config = null;
+	protected final SequentialSyslogMessageModifierConfig config;
 	
-	protected long currentSequence[] = new long[LEVEL_DEBUG + 1];
+	protected final long[] currentSequence = new long[LEVEL_DEBUG + 1];
 
-	public static final SequentialSyslogMessageModifier createDefault() {
-		SequentialSyslogMessageModifier modifier = new SequentialSyslogMessageModifier(SequentialSyslogMessageModifierConfig.createDefault());
-		
-		return modifier;
+	public static SequentialSyslogMessageModifier createDefault() {
+
+        return new SequentialSyslogMessageModifier(SequentialSyslogMessageModifierConfig.createDefault());
 	}
 
 	public SequentialSyslogMessageModifier(SequentialSyslogMessageModifierConfig config) {
@@ -36,7 +36,7 @@ public class SequentialSyslogMessageModifier implements SyslogMessageModifierIF 
 	}
 	
 	protected String pad(long number) {
-		StringBuffer buffer = new StringBuffer(Long.toString(number));
+		StringBuilder buffer = new StringBuilder(Long.toString(number));
 		
 		while (buffer.length() < this.config.getLastNumberDigits()) {
 			buffer.insert(0,this.config.getPadChar());
@@ -54,7 +54,7 @@ public class SequentialSyslogMessageModifier implements SyslogMessageModifierIF 
 	}
 	
 	protected String nextSequence(int level) {
-		long sequence = -1;
+		long sequence;
 		
 		synchronized(this) {
 			sequence = this.currentSequence[level];
@@ -67,7 +67,7 @@ public class SequentialSyslogMessageModifier implements SyslogMessageModifierIF 
 			}
 		}
 		
-		String _sequence = null;
+		String _sequence;
 		
 		if (this.config.isUsePadding()) {
 			_sequence = pad(sequence);
@@ -84,13 +84,10 @@ public class SequentialSyslogMessageModifier implements SyslogMessageModifierIF 
 	}
 
 	public String modify(SyslogIF syslog, int facility, int level, String message) {
-		StringBuffer buffer = new StringBuffer(message);
-		
-		buffer.append(this.config.getPrefix());
-		buffer.append(nextSequence(level));
-		buffer.append(this.config.getSuffix());
-		
-		return buffer.toString();
+
+        return message + this.config.getPrefix()
+                + nextSequence(level)
+                + this.config.getSuffix();
 	}
 	
 	public boolean verify(String message) {

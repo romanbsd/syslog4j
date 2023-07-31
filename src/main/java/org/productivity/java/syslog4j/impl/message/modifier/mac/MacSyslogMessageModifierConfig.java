@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.mac;
 
+import java.io.Serial;
 import java.security.Key;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -20,11 +21,11 @@ import org.productivity.java.syslog4j.util.Base64;
 * @version $Id: MacSyslogMessageModifierConfig.java,v 1.3 2009/04/17 02:37:04 cvs Exp $
 */
 public class MacSyslogMessageModifierConfig extends AbstractSyslogMessageModifierConfig {
-	private static final long serialVersionUID = 4524180892377960695L;
+	@Serial private static final long serialVersionUID = 4524180892377960695L;
 	
-	protected String macAlgorithm = null;
-	protected String keyAlgorithm = null;
-	protected Key key = null;
+	protected final String macAlgorithm;
+	protected final String keyAlgorithm;
+	protected Key key;
 	
 	public MacSyslogMessageModifierConfig(String macAlgorithm, String keyAlgorithm, Key key) {
 		this.macAlgorithm = macAlgorithm;

@@ -34,8 +34,8 @@ public final class OSDetectUtility {
 		"OS/2"
 	};
 	
-	private static boolean UNIX = false;
-	private static boolean WINDOWS = false;
+	private static final boolean UNIX;
+	private static final boolean WINDOWS;
 	
 	private OSDetectUtility() {
 		//
@@ -46,17 +46,17 @@ public final class OSDetectUtility {
 		
 		String osName = System.getProperty("os.name");
 		
-		if (osName != null && !"".equals(osName.trim())) {
+		if (osName != null && !osName.trim().isEmpty()) {
 			osName = osName.toLowerCase();
-			
-			for(int i=0; i<platforms.length; i++) {
-				String platform = platforms[i].toLowerCase();
-				
-				if (osName.indexOf(platform) > -1) {
-					match = true;
-					break;
-				}
-			}
+
+            for (String s : platforms) {
+                String platform = s.toLowerCase();
+
+                if (osName.contains(platform)) {
+                    match = true;
+                    break;
+                }
+            }
 		}
 		
 		return match;

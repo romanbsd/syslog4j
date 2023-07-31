@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,13 +24,13 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: AbstractSyslogWriter.java,v 1.9 2010/10/25 03:50:25 cvs Exp $
 */
 public abstract class AbstractSyslogWriter implements Runnable, Serializable {
-	private static final long serialVersionUID = 836468466009035847L;
+	@Serial private static final long serialVersionUID = 836468466009035847L;
 	
 	protected AbstractSyslog syslog = null;
 
-	protected List queuedMessages = null;
-	
-	protected Thread thread = null;
+	protected final List<byte[]> queuedMessages = new LinkedList<>();
+
+    protected Thread thread = null;
 
 	protected AbstractSyslogConfigIF syslogConfig = null;
 
@@ -43,10 +44,6 @@ public abstract class AbstractSyslogWriter implements Runnable, Serializable {
 			
 		} catch (ClassCastException cce) {
 			throw new SyslogRuntimeException("config must implement interface AbstractSyslogConfigIF");
-		}
-		
-		if (this.syslogConfig.isThreaded()) {
-			this.queuedMessages = new LinkedList();
 		}
 	}
 	
@@ -79,29 +76,28 @@ public abstract class AbstractSyslogWriter implements Runnable, Serializable {
 
 	public void run() {
 		while(!this.shutdown || !this.queuedMessages.isEmpty()) {
-			List queuedMessagesCopy = null;
+			List<byte[]> queuedMessagesCopy;
 			
 			synchronized(this.queuedMessages) {
-				queuedMessagesCopy = new LinkedList(this.queuedMessages);
+				queuedMessagesCopy = new LinkedList<>(this.queuedMessages);
 				this.queuedMessages.clear();
 			}
-			
-			if (queuedMessagesCopy != null) {
-				while(!queuedMessagesCopy.isEmpty()) {
-					byte[] message = (byte[]) queuedMessagesCopy.remove(0);
-							
-					try {
-						write(message);
-						
-						this.syslog.setBackLogStatus(false);
-							
-					} catch (SyslogRuntimeException sre) {
-						this.syslog.backLog(SyslogConstants.LEVEL_INFO,SyslogUtility.newString(this.syslog.getConfig(),message),sre);
-					}
-				}
-			}
-			
-			SyslogUtility.sleep(this.syslogConfig.getThreadLoopInterval());
+
+            while (!queuedMessagesCopy.isEmpty()) {
+                byte[] message = queuedMessagesCopy.remove(0);
+
+                try {
+                    write(message);
+
+                    this.syslog.setBackLogStatus(false);
+                } catch (SyslogRuntimeException sre) {
+                    this.syslog.backLog(SyslogConstants.LEVEL_INFO,
+                            SyslogUtility.newString(this.syslog.getConfig(), message),
+                            sre);
+                }
+            }
+
+            SyslogUtility.sleep(this.syslogConfig.getThreadLoopInterval());
 		}
 		
 		runCompleted();

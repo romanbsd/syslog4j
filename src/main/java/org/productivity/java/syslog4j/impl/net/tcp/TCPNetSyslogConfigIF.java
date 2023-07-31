@@ -14,27 +14,27 @@ import org.productivity.java.syslog4j.impl.net.AbstractNetSyslogConfigIF;
 * @version $Id: TCPNetSyslogConfigIF.java,v 1.6 2010/10/29 03:14:12 cvs Exp $
 */
 public interface TCPNetSyslogConfigIF extends AbstractNetSyslogConfigIF {
-	public byte[] getDelimiterSequence();
-	public void setDelimiterSequence(byte[] delimiterSequence);
+	byte[] getDelimiterSequence();
+	void setDelimiterSequence(byte[] delimiterSequence);
 
-	public boolean isPersistentConnection();
-	public void setPersistentConnection(boolean persistentConnection);
+	boolean isPersistentConnection();
+	void setPersistentConnection(boolean persistentConnection);
 	
-	public boolean isSoLinger();
-	public void setSoLinger(boolean soLinger);
+	boolean isSoLinger();
+	void setSoLinger(boolean soLinger);
 	
-	public int getSoLingerSeconds();
-	public void setSoLingerSeconds(int soLingerSeconds);
+	int getSoLingerSeconds();
+	void setSoLingerSeconds(int soLingerSeconds);
 	
-	public boolean isKeepAlive();
-	public void setKeepAlive(boolean keepAlive);
+	boolean isKeepAlive();
+	void setKeepAlive(boolean keepAlive);
 	
-	public boolean isReuseAddress();
-	public void setReuseAddress(boolean reuseAddress);
+	boolean isReuseAddress();
+	void setReuseAddress(boolean reuseAddress);
 	
-	public boolean isSetBufferSize();
-	public void setSetBufferSize(boolean setBufferSize);
+	boolean isSetBufferSize();
+	void setSetBufferSize(boolean setBufferSize);
 
-	public int getFreshConnectionInterval();
-	public void setFreshConnectionInterval(int interval);
+	int getFreshConnectionInterval();
+	void setFreshConnectionInterval(int interval);
 }

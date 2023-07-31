@@ -14,39 +14,39 @@ import java.io.Serializable;
 * @version $Id: SyslogPoolConfigIF.java,v 1.2 2009/03/29 17:38:58 cvs Exp $
 */
 public interface SyslogPoolConfigIF extends Serializable {
-	public int getMaxActive();
-	public void setMaxActive(int maxActive);
+	int getMaxActive();
+	void setMaxActive(int maxActive);
 	
-	public int getMaxIdle();
-	public void setMaxIdle(int maxIdle);
+	int getMaxIdle();
+	void setMaxIdle(int maxIdle);
 	
-	public long getMaxWait();
-	public void setMaxWait(long maxWait);
+	long getMaxWait();
+	void setMaxWait(long maxWait);
 	
-	public long getMinEvictableIdleTimeMillis();
-	public void setMinEvictableIdleTimeMillis(long minEvictableIdleTimeMillis);
+	long getMinEvictableIdleTimeMillis();
+	void setMinEvictableIdleTimeMillis(long minEvictableIdleTimeMillis);
 	
-	public int getMinIdle();
-	public void setMinIdle(int minIdle);
+	int getMinIdle();
+	void setMinIdle(int minIdle);
 	
-	public int getNumTestsPerEvictionRun();
-	public void setNumTestsPerEvictionRun(int numTestsPerEvictionRun);
+	int getNumTestsPerEvictionRun();
+	void setNumTestsPerEvictionRun(int numTestsPerEvictionRun);
 	
-	public long getSoftMinEvictableIdleTimeMillis();
-	public void setSoftMinEvictableIdleTimeMillis(long softMinEvictableIdleTimeMillis);
+	long getSoftMinEvictableIdleTimeMillis();
+	void setSoftMinEvictableIdleTimeMillis(long softMinEvictableIdleTimeMillis);
 	
-	public boolean isTestOnBorrow();
-	public void setTestOnBorrow(boolean testOnBorrow);
+	boolean isTestOnBorrow();
+	void setTestOnBorrow(boolean testOnBorrow);
 	
-	public boolean isTestOnReturn();
-	public void setTestOnReturn(boolean testOnReturn);
+	boolean isTestOnReturn();
+	void setTestOnReturn(boolean testOnReturn);
 	
-	public boolean isTestWhileIdle();
-	public void setTestWhileIdle(boolean testWhileIdle);
+	boolean isTestWhileIdle();
+	void setTestWhileIdle(boolean testWhileIdle);
 	
-	public long getTimeBetweenEvictionRunsMillis();
-	public void setTimeBetweenEvictionRunsMillis(long timeBetweenEvictionRunsMillis);
+	long getTimeBetweenEvictionRunsMillis();
+	void setTimeBetweenEvictionRunsMillis(long timeBetweenEvictionRunsMillis);
 	
-	public byte getWhenExhaustedAction();
-	public void setWhenExhaustedAction(byte whenExhaustedAction);
+	byte getWhenExhaustedAction();
+	void setWhenExhaustedAction(byte whenExhaustedAction);
 }

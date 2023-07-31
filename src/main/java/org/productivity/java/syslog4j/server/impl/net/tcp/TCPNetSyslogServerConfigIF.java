@@ -13,18 +13,18 @@ import org.productivity.java.syslog4j.server.SyslogServerConfigIF;
 * @version $Id: TCPNetSyslogServerConfigIF.java,v 1.3 2010/11/28 01:38:08 cvs Exp $
 */
 public interface TCPNetSyslogServerConfigIF extends SyslogServerConfigIF {
-	public final static byte MAX_ACTIVE_SOCKETS_BEHAVIOR_BLOCK = 0;
-	public final static byte MAX_ACTIVE_SOCKETS_BEHAVIOR_REJECT = 1;
+	byte MAX_ACTIVE_SOCKETS_BEHAVIOR_BLOCK = 0;
+	byte MAX_ACTIVE_SOCKETS_BEHAVIOR_REJECT = 1;
 	
-	public int getTimeout();
-	public void setTimeout(int timeout);
+	int getTimeout();
+	void setTimeout(int timeout);
 	
-	public int getBacklog();
-	public void setBacklog(int backlog);
+	int getBacklog();
+	void setBacklog(int backlog);
 	
-	public int getMaxActiveSockets();
-	public void setMaxActiveSockets(int maxActiveSockets);
+	int getMaxActiveSockets();
+	void setMaxActiveSockets(int maxActiveSockets);
 	
-	public byte getMaxActiveSocketsBehavior();
-	public void setMaxActiveSocketsBehavior(byte maxActiveSocketsBehavior);
+	byte getMaxActiveSocketsBehavior();
+	void setMaxActiveSocketsBehavior(byte maxActiveSocketsBehavior);
 }

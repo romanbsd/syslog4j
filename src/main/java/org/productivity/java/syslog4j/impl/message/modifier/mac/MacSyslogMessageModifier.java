@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.mac;
 
+import java.io.Serial;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -25,11 +26,11 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: MacSyslogMessageModifier.java,v 1.5 2010/10/28 05:10:57 cvs Exp $
 */
 public class MacSyslogMessageModifier extends AbstractSyslogMessageModifier {
-	private static final long serialVersionUID = 5054979194802197540L;
+	@Serial private static final long serialVersionUID = 5054979194802197540L;
 
-	protected MacSyslogMessageModifierConfig config = null;
+	protected final MacSyslogMessageModifierConfig config;
 	
-	protected Mac mac = null;
+	protected final Mac mac;
 	
 	public MacSyslogMessageModifier(MacSyslogMessageModifierConfig config) throws SyslogRuntimeException {
 		super(config);
@@ -40,13 +41,11 @@ public class MacSyslogMessageModifier extends AbstractSyslogMessageModifier {
 			this.mac = Mac.getInstance(config.getMacAlgorithm());
 			this.mac.init(config.getKey());
 			
-		} catch (NoSuchAlgorithmException nsae) {
+		} catch (NoSuchAlgorithmException | InvalidKeyException nsae) {
 			throw new SyslogRuntimeException(nsae);
 			
-		} catch (InvalidKeyException ike) {
-			throw new SyslogRuntimeException(ike);
 		}
-	}
+    }
 
 	public static MacSyslogMessageModifier createHmacSHA1(Key key) {
 		return new MacSyslogMessageModifier(MacSyslogMessageModifierConfig.createHmacSHA1(key));
@@ -88,7 +87,7 @@ public class MacSyslogMessageModifier extends AbstractSyslogMessageModifier {
 		synchronized(this.mac) {
 			byte[] messageBytes = SyslogUtility.getBytes(syslog.getConfig(),message);
 			
-			StringBuffer buffer = new StringBuffer(message);
+			StringBuilder buffer = new StringBuilder(message);
 			
 			byte[] macBytes = this.mac.doFinal(messageBytes);
 			

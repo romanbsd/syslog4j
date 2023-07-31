@@ -18,7 +18,7 @@ import org.productivity.java.syslog4j.impl.backlog.AbstractSyslogBackLogHandler;
 * @version $Id: PrintStreamSyslogBackLogHandler.java,v 1.1 2009/01/24 22:00:18 cvs Exp $
 */
 public class PrintStreamSyslogBackLogHandler extends AbstractSyslogBackLogHandler {
-	protected PrintStream printStream = null;
+	protected final PrintStream printStream;
 	protected boolean appendLinefeed = false;
 	
 	public PrintStreamSyslogBackLogHandler(PrintStream printStream) {
@@ -49,7 +49,8 @@ public class PrintStreamSyslogBackLogHandler extends AbstractSyslogBackLogHandle
 	}
 
 	public void down(SyslogIF syslog, String reason) {
-		this.printStream.println(syslog.getProtocol() + ": DOWN" + (reason != null && !"".equals(reason.trim()) ? " (" + reason + ")" : ""));
+		this.printStream.println(syslog.getProtocol() + ": DOWN" + (reason != null && !reason.trim().isEmpty()
+                ? " (" + reason + ")" : ""));
 	}
 
 	public void up(SyslogIF syslog) {

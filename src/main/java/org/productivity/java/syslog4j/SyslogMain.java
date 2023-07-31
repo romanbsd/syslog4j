@@ -19,7 +19,7 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
  * @version $Id: SyslogMain.java,v 1.4 2010/11/28 01:38:08 cvs Exp $
  */
 public class SyslogMain {
-	public static boolean CALL_SYSTEM_EXIT_ON_FAILURE = true;
+	public static final boolean CALL_SYSTEM_EXIT_ON_FAILURE = true;
 	
 	public static class Options {
 		public String host = null;
@@ -119,22 +119,13 @@ public class SyslogMain {
 	public static void main(String[] args) throws Exception {
 		main(args,true);
 	}
-
+	
 	public static void main(String[] args, boolean shutdown) throws Exception {
-		boolean ok = doMain(args, shutdown);
-		if (!ok && CALL_SYSTEM_EXIT_ON_FAILURE) {
-			System.exit(1);
-		}
-	}
-
-	public static boolean doMain(String[] args, boolean shutdown)
-			throws Exception {
-
 		Options options = parseOptions(args);
 
 		if (options.usage != null) {
 			usage(options.usage);
-			return false;
+			if (CALL_SYSTEM_EXIT_ON_FAILURE) { System.exit(1); } else { return; }
 		}
 		
 		if (!options.quiet) {
@@ -143,7 +134,7 @@ public class SyslogMain {
 		
 		if (!Syslog.exists(options.protocol)) {
 			usage("Protocol \"" + options.protocol + "\" not supported");
-			return false;
+			if (CALL_SYSTEM_EXIT_ON_FAILURE) { System.exit(1); } else { return; }
 		}
 		
 		SyslogIF syslog = Syslog.getInstance(options.protocol);
@@ -176,7 +167,7 @@ public class SyslogMain {
 			syslog.log(level,options.message);
 			
 		} else {
-			InputStream is = null;
+			InputStream is;
 			
 			if (options.fileName != null) {
 				is = new FileInputStream(options.fileName);
@@ -189,7 +180,7 @@ public class SyslogMain {
 			
 			String line = br.readLine();
 			
-			while(line != null && line.length() > 0) {
+			while(line != null && !line.isEmpty()) {
 				if (!options.quiet) {
 					System.out.println("Sending " + options.facility + "." + options.level + " message \"" + line + "\"");
 				}
@@ -203,7 +194,5 @@ public class SyslogMain {
 		if (shutdown) {
 			Syslog.shutdown();
 		}
-
-		return true;
 	}
 }

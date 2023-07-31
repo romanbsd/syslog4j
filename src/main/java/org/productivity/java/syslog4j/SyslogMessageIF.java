@@ -13,5 +13,5 @@ import java.io.Serializable;
 * @version $Id: SyslogMessageIF.java,v 1.1 2008/11/10 04:38:37 cvs Exp $
 */
 public interface SyslogMessageIF extends Serializable {
-	public String createMessage();
+	String createMessage();
 }

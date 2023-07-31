@@ -43,7 +43,7 @@ public class UDPNetSyslogServer extends AbstractSyslogServer {
 	}
 	
 	protected DatagramSocket createDatagramSocket() throws SocketException, UnknownHostException {
-		DatagramSocket datagramSocket = null;
+		DatagramSocket datagramSocket;
 		
 		if (this.syslogServerConfig.getHost() != null) {
 			InetAddress inetAddress = InetAddress.getByName(this.syslogServerConfig.getHost());
@@ -62,14 +62,12 @@ public class UDPNetSyslogServer extends AbstractSyslogServer {
 			this.ds = createDatagramSocket();
 			this.shutdown = false;
 			
-		} catch (SocketException se) {
+		} catch (SocketException | UnknownHostException se) {
 			return;
 			
-		} catch (UnknownHostException uhe) {
-			return;
 		}
-			
-		byte[] receiveData = new byte[SyslogConstants.SYSLOG_BUFFER_SIZE];
+
+        byte[] receiveData = new byte[SyslogConstants.SYSLOG_BUFFER_SIZE];
 		
 		handleInitialize(this);
 					

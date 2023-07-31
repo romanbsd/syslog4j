@@ -13,15 +13,15 @@ import org.productivity.java.syslog4j.SyslogRuntimeException;
 * @version $Id: SyslogServerIF.java,v 1.5 2008/11/07 15:15:41 cvs Exp $
 */
 public interface SyslogServerIF extends Runnable {
-	public void initialize(String protocol, SyslogServerConfigIF config) throws SyslogRuntimeException;
+	void initialize(String protocol, SyslogServerConfigIF config) throws SyslogRuntimeException;
 	
-	public String getProtocol();
-	public SyslogServerConfigIF getConfig();
+	String getProtocol();
+	SyslogServerConfigIF getConfig();
 
-	public void run();
+	void run();
 	
-	public Thread getThread();
-	public void setThread(Thread thread);
+	Thread getThread();
+	void setThread(Thread thread);
 
-	public void shutdown();
+	void shutdown();
 }

@@ -14,7 +14,7 @@ import org.productivity.java.syslog4j.SyslogBackLogHandlerIF;
 * @version $Id: SystemErrSyslogBackLogHandler.java,v 1.2 2009/03/29 17:38:59 cvs Exp $
 */
 public class SystemErrSyslogBackLogHandler extends PrintStreamSyslogBackLogHandler {
-	public static final SyslogBackLogHandlerIF create() {
+	public static SyslogBackLogHandlerIF create() {
 		return new SystemErrSyslogBackLogHandler();
 	}
 	

@@ -1,7 +1,5 @@
 package org.productivity.java.syslog4j.server.impl.net.tcp.ssl;
 
-import java.io.IOException;
-
 import javax.net.ServerSocketFactory;
 import javax.net.ssl.SSLServerSocketFactory;
 
@@ -27,32 +25,31 @@ public class SSLTCPNetSyslogServer extends TCPNetSyslogServer {
 		
 		String keyStore = sslTcpNetSyslogServerConfig.getKeyStore();
 		
-		if (keyStore != null && !"".equals(keyStore.trim())) {
+		if (keyStore != null && !keyStore.trim().isEmpty()) {
 			System.setProperty("javax.net.ssl.keyStore",keyStore);
 		}
 
 		String keyStorePassword = sslTcpNetSyslogServerConfig.getKeyStorePassword();
 		
-		if (keyStorePassword != null && !"".equals(keyStorePassword.trim())) {
+		if (keyStorePassword != null && !keyStorePassword.trim().isEmpty()) {
 			System.setProperty("javax.net.ssl.keyStorePassword",keyStorePassword);
 		}
 
 		String trustStore = sslTcpNetSyslogServerConfig.getTrustStore();
 		
-		if (trustStore != null && !"".equals(trustStore.trim())) {
+		if (trustStore != null && !trustStore.trim().isEmpty()) {
 			System.setProperty("javax.net.ssl.trustStore",trustStore);
 		}
 
 		String trustStorePassword = sslTcpNetSyslogServerConfig.getTrustStorePassword();
 		
-		if (trustStorePassword != null && !"".equals(trustStorePassword.trim())) {
+		if (trustStorePassword != null && !trustStorePassword.trim().isEmpty()) {
 			System.setProperty("javax.net.ssl.trustStorePassword",trustStorePassword);
 		}
 	}
 
-	protected ServerSocketFactory getServerSocketFactory() throws IOException {
-		ServerSocketFactory serverSocketFactory = SSLServerSocketFactory.getDefault();
-		
-		return serverSocketFactory;
+	protected ServerSocketFactory getServerSocketFactory() {
+
+        return SSLServerSocketFactory.getDefault();
 	}
 }

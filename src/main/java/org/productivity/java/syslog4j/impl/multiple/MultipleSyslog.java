@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.multiple;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.Syslog;
 import org.productivity.java.syslog4j.SyslogConfigIF;
 import org.productivity.java.syslog4j.SyslogConstants;
@@ -20,7 +21,7 @@ import org.productivity.java.syslog4j.SyslogRuntimeException;
 * @version $Id: MultipleSyslog.java,v 1.10 2010/02/11 05:00:55 cvs Exp $
 */
 public class MultipleSyslog implements SyslogIF {
-	private static final long serialVersionUID = 587308197526365108L;
+	@Serial private static final long serialVersionUID = 587308197526365108L;
 
 	protected String syslogProtocol = null;
 	protected MultipleSyslogConfig multipleSyslogConfig = null;
@@ -106,7 +107,7 @@ public class MultipleSyslog implements SyslogIF {
 
 	public void log(int level, String message) {
 		for(int i=0; i<this.multipleSyslogConfig.getProtocols().size(); i++) {
-			String protocol = (String) this.multipleSyslogConfig.getProtocols().get(i);
+			String protocol = this.multipleSyslogConfig.getProtocols().get(i);
 			
 			SyslogIF syslog = Syslog.getInstance(protocol);
 			
@@ -116,7 +117,7 @@ public class MultipleSyslog implements SyslogIF {
 
 	public void log(int level, SyslogMessageIF message) {
 		for(int i=0; i<this.multipleSyslogConfig.getProtocols().size(); i++) {
-			String protocol = (String) this.multipleSyslogConfig.getProtocols().get(i);
+			String protocol = this.multipleSyslogConfig.getProtocols().get(i);
 			
 			SyslogIF syslog = Syslog.getInstance(protocol);
 			
@@ -126,7 +127,7 @@ public class MultipleSyslog implements SyslogIF {
 
 	public void flush() throws SyslogRuntimeException {
 		for(int i=0; i<this.multipleSyslogConfig.getProtocols().size(); i++) {
-			String protocol = (String) this.multipleSyslogConfig.getProtocols().get(i);
+			String protocol = this.multipleSyslogConfig.getProtocols().get(i);
 			
 			SyslogIF syslog = Syslog.getInstance(protocol);
 			
@@ -136,7 +137,7 @@ public class MultipleSyslog implements SyslogIF {
 
 	public void shutdown() throws SyslogRuntimeException {
 		for(int i=0; i<this.multipleSyslogConfig.getProtocols().size(); i++) {
-			String protocol = (String) this.multipleSyslogConfig.getProtocols().get(i);
+			String protocol = this.multipleSyslogConfig.getProtocols().get(i);
 			
 			SyslogIF syslog = Syslog.getInstance(protocol);
 			

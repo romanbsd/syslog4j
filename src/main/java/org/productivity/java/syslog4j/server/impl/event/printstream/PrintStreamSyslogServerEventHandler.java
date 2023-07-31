@@ -1,6 +1,7 @@
 package org.productivity.java.syslog4j.server.impl.event.printstream;
 
 import java.io.PrintStream;
+import java.io.Serial;
 import java.net.SocketAddress;
 import java.util.Date;
 
@@ -21,17 +22,16 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: PrintStreamSyslogServerEventHandler.java,v 1.7 2010/11/28 22:07:57 cvs Exp $
 */
 public class PrintStreamSyslogServerEventHandler implements SyslogServerSessionEventHandlerIF {
-	private static final long serialVersionUID = 6036415838696050746L;
+	@Serial private static final long serialVersionUID = 6036415838696050746L;
 	
-	protected PrintStream stream = null;
+	protected final PrintStream stream;
 	
 	public PrintStreamSyslogServerEventHandler(PrintStream stream) {
 		this.stream = stream;
 	}
 
 	public void initialize(SyslogServerIF syslogServer) {
-		return;
-	}
+    }
 
 	public Object sessionOpened(SyslogServerIF syslogServer, SocketAddress socketAddress) {
 		return null;
@@ -54,6 +54,5 @@ public class PrintStreamSyslogServerEventHandler implements SyslogServerSessionE
 	}
 
 	public void destroy(SyslogServerIF syslogServer) {
-		return;
-	}
+    }
 }

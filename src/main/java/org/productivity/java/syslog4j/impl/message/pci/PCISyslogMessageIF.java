@@ -20,11 +20,11 @@ package org.productivity.java.syslog4j.impl.message.pci;
 * @version $Id: PCISyslogMessageIF.java,v 1.1 2008/11/10 04:38:37 cvs Exp $
 */
 public interface PCISyslogMessageIF {
-	public String getUserId();
-	public String getEventType();
-	public String getDate();
-	public String getTime();
-	public String getStatus();
-	public String getOrigination();
-	public String getAffectedResource();
+	String getUserId();
+	String getEventType();
+	String getDate();
+	String getTime();
+	String getStatus();
+	String getOrigination();
+	String getAffectedResource();
 }

@@ -1,5 +1,7 @@
 package org.productivity.java.syslog4j.impl.message.modifier;
 
+import java.io.Serial;
+import java.util.Objects;
 import org.productivity.java.syslog4j.SyslogCharSetIF;
 import org.productivity.java.syslog4j.SyslogConstants;
 import org.productivity.java.syslog4j.SyslogMessageModifierConfigIF;
@@ -16,7 +18,7 @@ import org.productivity.java.syslog4j.SyslogMessageModifierConfigIF;
 * @version $Id: AbstractSyslogMessageModifierConfig.java,v 1.4 2010/10/28 05:10:57 cvs Exp $
 */
 public abstract class AbstractSyslogMessageModifierConfig implements SyslogMessageModifierConfigIF, SyslogCharSetIF {
-	private static final long serialVersionUID = 5036574188079124884L;
+	@Serial private static final long serialVersionUID = 5036574188079124884L;
 	
 	protected String prefix = SYSLOG_MESSAGE_MODIFIER_PREFIX_DEFAULT;
 	protected String suffix = SYSLOG_MESSAGE_MODIFIER_SUFFIX_DEFAULT;
@@ -31,21 +33,11 @@ public abstract class AbstractSyslogMessageModifierConfig implements SyslogMessa
 	}
 
 	public void setPrefix(String prefix) {
-		if (prefix == null) {
-			this.prefix = "";
-			
-		} else {
-			this.prefix = prefix;
-		}
+        this.prefix = Objects.requireNonNullElse(prefix, "");
 	}
 
 	public void setSuffix(String suffix) {
-		if (suffix == null) {
-			this.suffix = "";
-			
-		} else {
-			this.suffix = suffix;
-		}
+        this.suffix = Objects.requireNonNullElse(suffix, "");
 	}
 
 	public String getCharSet() {

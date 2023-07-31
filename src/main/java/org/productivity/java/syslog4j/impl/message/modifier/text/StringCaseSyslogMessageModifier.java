@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.text;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
@@ -17,7 +18,7 @@ import org.productivity.java.syslog4j.SyslogRuntimeException;
 * @version $Id: StringCaseSyslogMessageModifier.java,v 1.3 2010/10/28 05:10:57 cvs Exp $
 */
 public class StringCaseSyslogMessageModifier implements SyslogMessageModifierIF {
-	private static final long serialVersionUID = 8383234811585957460L;
+	@Serial private static final long serialVersionUID = 8383234811585957460L;
 	
 	public static final byte LOWER_CASE = 0; 
 	public static final byte UPPER_CASE = 1; 
@@ -25,7 +26,7 @@ public class StringCaseSyslogMessageModifier implements SyslogMessageModifierIF 
 	public static final StringCaseSyslogMessageModifier LOWER = new StringCaseSyslogMessageModifier(LOWER_CASE);
 	public static final StringCaseSyslogMessageModifier UPPER = new StringCaseSyslogMessageModifier(UPPER_CASE);
 	
-	protected byte stringCase = LOWER_CASE;  
+	protected final byte stringCase;
 	
 	public StringCaseSyslogMessageModifier(byte stringCase) {
 		this.stringCase = stringCase;

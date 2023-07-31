@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.checksum;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.message.modifier.AbstractSyslogMessageModifier;
@@ -17,19 +18,17 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: ChecksumSyslogMessageModifier.java,v 1.5 2010/10/28 05:10:57 cvs Exp $
 */
 public class ChecksumSyslogMessageModifier extends AbstractSyslogMessageModifier {
-	private static final long serialVersionUID = -3268914290497005065L;
+	@Serial private static final long serialVersionUID = -3268914290497005065L;
 	
-	protected ChecksumSyslogMessageModifierConfig config = null;
+	protected final ChecksumSyslogMessageModifierConfig config;
 	
-	public static final ChecksumSyslogMessageModifier createCRC32() {
-		ChecksumSyslogMessageModifier crc32 = new ChecksumSyslogMessageModifier(ChecksumSyslogMessageModifierConfig.createCRC32());
-		
-		return crc32;
+	public static ChecksumSyslogMessageModifier createCRC32() {
+
+        return new ChecksumSyslogMessageModifier(ChecksumSyslogMessageModifierConfig.createCRC32());
 	}
-	public static final ChecksumSyslogMessageModifier createADLER32() {
-		ChecksumSyslogMessageModifier adler32 = new ChecksumSyslogMessageModifier(ChecksumSyslogMessageModifierConfig.createADLER32());
-		
-		return adler32;
+	public static ChecksumSyslogMessageModifier createADLER32() {
+
+        return new ChecksumSyslogMessageModifier(ChecksumSyslogMessageModifierConfig.createADLER32());
 	}
 	
 	public ChecksumSyslogMessageModifier(ChecksumSyslogMessageModifierConfig config) {
@@ -81,7 +80,7 @@ public class ChecksumSyslogMessageModifier extends AbstractSyslogMessageModifier
 
 	public String modify(SyslogIF syslog, int facility, int level, String message) {
 		synchronized(this.config.getChecksum()) {
-			StringBuffer messageBuffer = new StringBuffer(message);
+			StringBuilder messageBuffer = new StringBuilder(message);
 			
 			byte[] messageBytes = SyslogUtility.getBytes(syslog.getConfig(),message);
 			

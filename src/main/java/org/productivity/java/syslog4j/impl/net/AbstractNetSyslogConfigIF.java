@@ -14,6 +14,6 @@ import org.productivity.java.syslog4j.impl.AbstractSyslogConfigIF;
 * @version $Id: AbstractNetSyslogConfigIF.java,v 1.4 2009/06/06 19:11:02 cvs Exp $
 */
 public interface AbstractNetSyslogConfigIF extends AbstractSyslogConfigIF {
-	public boolean isCacheHostAddress();
-	public void setCacheHostAddress(boolean cacheHostAddress);
+	boolean isCacheHostAddress();
+	void setCacheHostAddress(boolean cacheHostAddress);
 }

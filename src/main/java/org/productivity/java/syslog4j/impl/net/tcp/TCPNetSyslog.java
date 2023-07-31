@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.net.tcp;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
 import org.productivity.java.syslog4j.impl.net.AbstractNetSyslog;
@@ -16,7 +17,7 @@ import org.productivity.java.syslog4j.impl.net.AbstractNetSyslog;
 * @version $Id: TCPNetSyslog.java,v 1.21 2010/11/28 04:43:31 cvs Exp $
 */
 public class TCPNetSyslog extends AbstractNetSyslog {
-	private static final long serialVersionUID = -2157528355215068721L;
+	@Serial private static final long serialVersionUID = -2157528355215068721L;
 
 	protected TCPNetSyslogWriter writer = null;
 	

@@ -1,5 +1,7 @@
 package org.productivity.java.syslog4j.server.impl.net.udp;
 
+import java.io.Serial;
+import org.productivity.java.syslog4j.server.SyslogServerIF;
 import org.productivity.java.syslog4j.server.impl.net.AbstractNetSyslogServerConfig;
 
 /**
@@ -13,7 +15,7 @@ import org.productivity.java.syslog4j.server.impl.net.AbstractNetSyslogServerCon
 * @version $Id: UDPNetSyslogServerConfig.java,v 1.6 2010/10/28 05:10:57 cvs Exp $
 */
 public class UDPNetSyslogServerConfig extends AbstractNetSyslogServerConfig {
-	private static final long serialVersionUID = -2005919161187055486L;
+	@Serial private static final long serialVersionUID = -2005919161187055486L;
 
 	public UDPNetSyslogServerConfig() {
 		//
@@ -32,7 +34,7 @@ public class UDPNetSyslogServerConfig extends AbstractNetSyslogServerConfig {
 		this.port = port;
 	}
 
-	public Class getSyslogServerClass() {
+	public Class<? extends SyslogServerIF> getSyslogServerClass() {
 		return UDPNetSyslogServer.class;
 	}
 }

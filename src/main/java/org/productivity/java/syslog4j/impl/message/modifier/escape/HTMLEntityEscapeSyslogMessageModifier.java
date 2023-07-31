@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.escape;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 
@@ -18,17 +19,16 @@ import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 * @version $Id: HTMLEntityEscapeSyslogMessageModifier.java,v 1.4 2010/10/28 05:10:57 cvs Exp $
 */
 public class HTMLEntityEscapeSyslogMessageModifier implements SyslogMessageModifierIF {
-	private static final long serialVersionUID = -8481773209240762293L;
+	@Serial private static final long serialVersionUID = -8481773209240762293L;
 
-	public static final SyslogMessageModifierIF createDefault() {
+	public static SyslogMessageModifierIF createDefault() {
 		return new HTMLEntityEscapeSyslogMessageModifier();
 	}
 
 	public String modify(SyslogIF syslog, int facility, int level, String message) {
-		if (message != null && !"".equals(message.trim())) {
-			String escapedMessage = escapeHtml(message);
-			
-			return escapedMessage;
+		if (message != null && !message.trim().isEmpty()) {
+
+            return escapeHtml(message);
 		}
 		
 		return message;
@@ -48,7 +48,7 @@ public class HTMLEntityEscapeSyslogMessageModifier implements SyslogMessageModif
 	 * @return Returns a message where any HTML entity characters are escaped.
 	 */
 	public static String escapeHtml(String message) {
-		StringBuffer b = new StringBuffer(message.length());
+		StringBuilder b = new StringBuilder(message.length());
 	 	
 		for (int i = 0; i < message.length(); i++) {
 			char ch = message.charAt(i);

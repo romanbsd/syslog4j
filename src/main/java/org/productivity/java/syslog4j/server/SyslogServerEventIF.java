@@ -21,21 +21,21 @@ public interface SyslogServerEventIF extends SyslogCharSetIF {
 	 * 
 	 * @return Returns the raw data received from the client.
 	 */
-	public byte[] getRaw();
+    byte[] getRaw();
 	
-	public int getFacility();
-	public void setFacility(int facility);
+	int getFacility();
+	void setFacility(int facility);
 
-	public Date getDate();
-	public void setDate(Date date);
+	Date getDate();
+	void setDate(Date date);
 	
-	public int getLevel();
-	public void setLevel(int level);
+	int getLevel();
+	void setLevel(int level);
 	
-	public String getHost();
-	public void setHost(String host);
-	public boolean isHostStrippedFromMessage();
+	String getHost();
+	void setHost(String host);
+	boolean isHostStrippedFromMessage();
 		
-	public String getMessage();
-	public void setMessage(String message);
+	String getMessage();
+	void setMessage(String message);
 }

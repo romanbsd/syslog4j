@@ -14,15 +14,15 @@ import org.productivity.java.syslog4j.impl.net.tcp.TCPNetSyslogConfigIF;
 * @version $Id: SSLTCPNetSyslogConfigIF.java,v 1.1 2009/03/29 17:38:58 cvs Exp $
 */
 public interface SSLTCPNetSyslogConfigIF extends TCPNetSyslogConfigIF {
-	public String getKeyStore();	
-	public void setKeyStore(String keyStore);
+	String getKeyStore();
+	void setKeyStore(String keyStore);
 	
-	public String getKeyStorePassword();
-	public void setKeyStorePassword(String keyStorePassword);
+	String getKeyStorePassword();
+	void setKeyStorePassword(String keyStorePassword);
 
-	public String getTrustStore();	
-	public void setTrustStore(String trustStore);
+	String getTrustStore();
+	void setTrustStore(String trustStore);
 	
-	public String getTrustStorePassword();
-	public void setTrustStorePassword(String trustStorePassword);
+	String getTrustStorePassword();
+	void setTrustStorePassword(String trustStorePassword);
 }

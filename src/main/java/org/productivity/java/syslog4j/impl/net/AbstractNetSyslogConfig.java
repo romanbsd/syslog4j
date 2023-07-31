@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.net;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.impl.AbstractSyslogConfig;
 
 /**
@@ -14,7 +15,7 @@ import org.productivity.java.syslog4j.impl.AbstractSyslogConfig;
 * @version $Id: AbstractNetSyslogConfig.java,v 1.12 2010/10/25 03:50:25 cvs Exp $
 */
 public abstract class AbstractNetSyslogConfig extends AbstractSyslogConfig implements AbstractNetSyslogConfigIF {
-	private static final long serialVersionUID = 7240133962159244924L;
+	@Serial private static final long serialVersionUID = 7240133962159244924L;
 
 	protected String host = SYSLOG_HOST_DEFAULT;
 	protected int port = SYSLOG_PORT_DEFAULT;

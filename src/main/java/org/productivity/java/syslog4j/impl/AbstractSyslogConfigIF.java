@@ -2,7 +2,9 @@ package org.productivity.java.syslog4j.impl;
 
 import java.util.List;
 
+import org.productivity.java.syslog4j.SyslogBackLogHandlerIF;
 import org.productivity.java.syslog4j.SyslogConfigIF;
+import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 
 /**
 * AbstractSyslogConfigIF provides an interface for all Abstract Syslog
@@ -16,41 +18,41 @@ import org.productivity.java.syslog4j.SyslogConfigIF;
 * @version $Id: AbstractSyslogConfigIF.java,v 1.7 2010/10/29 03:14:20 cvs Exp $
 */
 public interface AbstractSyslogConfigIF extends SyslogConfigIF {
-	public Class getSyslogWriterClass();
+	Class<? extends AbstractSyslogWriter> getSyslogWriterClass();
 	
-	public List getBackLogHandlers();
+	List<SyslogBackLogHandlerIF> getBackLogHandlers();
 	
-	public List getMessageModifiers();
+	List<SyslogMessageModifierIF> getMessageModifiers();
 
-	public byte[] getSplitMessageBeginText();
-	public void setSplitMessageBeginText(byte[] beginText);
+	byte[] getSplitMessageBeginText();
+	void setSplitMessageBeginText(byte[] beginText);
 	
-	public byte[] getSplitMessageEndText();
-	public void setSplitMessageEndText(byte[] endText);
+	byte[] getSplitMessageEndText();
+	void setSplitMessageEndText(byte[] endText);
 
-	public boolean isThreaded();
-	public void setThreaded(boolean threaded);
+	boolean isThreaded();
+	void setThreaded(boolean threaded);
 	
-	public boolean isUseDaemonThread();
-	public void setUseDaemonThread(boolean useDaemonThread);
+	boolean isUseDaemonThread();
+	void setUseDaemonThread(boolean useDaemonThread);
 	
-	public int getThreadPriority();
-	public void setThreadPriority(int threadPriority);
+	int getThreadPriority();
+	void setThreadPriority(int threadPriority);
 	
-	public long getThreadLoopInterval();
-	public void setThreadLoopInterval(long threadLoopInterval);
+	long getThreadLoopInterval();
+	void setThreadLoopInterval(long threadLoopInterval);
 	
-	public long getMaxShutdownWait();
-	public void setMaxShutdownWait(long maxShutdownWait);
+	long getMaxShutdownWait();
+	void setMaxShutdownWait(long maxShutdownWait);
 	
-	public int getWriteRetries();
-	public void setWriteRetries(int writeRetries);
+	int getWriteRetries();
+	void setWriteRetries(int writeRetries);
 	
-	public int getMaxQueueSize();	
+	int getMaxQueueSize();
 	/**
 	 * Use the (default) value of -1 to allow for a queue of indefinite depth (size).
 	 * 
 	 * @param maxQueueSize
 	 */
-	public void setMaxQueueSize(int maxQueueSize);
+    void setMaxQueueSize(int maxQueueSize);
 }

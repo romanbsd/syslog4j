@@ -1,12 +1,13 @@
 package org.productivity.java.syslog4j.impl.message.modifier;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogMessageModifierConfigIF;
 import org.productivity.java.syslog4j.SyslogMessageModifierIF;
 
 public abstract class AbstractSyslogMessageModifier implements SyslogMessageModifierIF {
-	private static final long serialVersionUID = 7632959170109372003L;
+	@Serial private static final long serialVersionUID = 7632959170109372003L;
 	
-	protected SyslogMessageModifierConfigIF messageModifierConfig = null;
+	protected final SyslogMessageModifierConfigIF messageModifierConfig;
 	
 	public AbstractSyslogMessageModifier(SyslogMessageModifierConfigIF messageModifierConfig) {
 		this.messageModifierConfig = messageModifierConfig;
@@ -19,15 +20,15 @@ public abstract class AbstractSyslogMessageModifier implements SyslogMessageModi
 	public static String[] parseInlineModifier(String message, String prefix, String suffix) {
 		String[] messageAndModifier = null;
 		
-		if (message == null || "".equals(message.trim())) {
+		if (message == null || message.trim().isEmpty()) {
 			return null;
 		}
 		
-		if (prefix == null || "".equals(prefix)) {
+		if (prefix == null || prefix.isEmpty()) {
 			prefix = " ";
 		}
 		
-		if (suffix == null || "".equals(suffix)) {
+		if (suffix == null || suffix.isEmpty()) {
 			int pi = message.lastIndexOf(prefix);
 			
 			if (pi > -1) {

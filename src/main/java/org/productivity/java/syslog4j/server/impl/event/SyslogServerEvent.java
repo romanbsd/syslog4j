@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.server.impl.event;
 
+import java.io.Serial;
 import java.net.InetAddress;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,7 +23,7 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: SyslogServerEvent.java,v 1.9 2011/01/11 06:21:15 cvs Exp $
 */
 public class SyslogServerEvent implements SyslogServerEventIF {
-	private static final long serialVersionUID = 6136043067089899962L;
+	@Serial private static final long serialVersionUID = 6136043067089899962L;
 	
 	public static final String DATE_FORMAT = "MMM dd HH:mm:ss yyyy";
 	
@@ -70,7 +71,7 @@ public class SyslogServerEvent implements SyslogServerEventIF {
 		int i = this.message.indexOf(' ');
 		
 		if (i > -1) {
-			String hostAddress = null;
+			String hostAddress;
 			String hostName = null;
 			
 			String providedHost = this.message.substring(0,i).trim();
@@ -110,7 +111,7 @@ public class SyslogServerEvent implements SyslogServerEventIF {
 			}
 				
 			if (this.host == null) {
-				this.host = (hostName != null) ? hostName : hostAddress;
+				this.host = hostName;
 			}			
 		}
 	}
@@ -142,7 +143,7 @@ public class SyslogServerEvent implements SyslogServerEventIF {
 			if (i <= 4 && i > -1) {
 				String priorityStr = this.message.substring(1,i);
 				
-				int priority = 0;
+				int priority;
 				try {
 					priority = Integer.parseInt(priorityStr);
 					this.facility = priority >> 3;
@@ -179,9 +180,8 @@ public class SyslogServerEvent implements SyslogServerEventIF {
 
 	public byte[] getRaw() {
 		if (this.rawString != null) {
-			byte[] rawStringBytes = SyslogUtility.getBytes(this,this.rawString);
-			
-			return rawStringBytes;
+
+            return SyslogUtility.getBytes(this, this.rawString);
 			
 		} else if (this.rawBytes.length == this.rawLength) {
 			return this.rawBytes;

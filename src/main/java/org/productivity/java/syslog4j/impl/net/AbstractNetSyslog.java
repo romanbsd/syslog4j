@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.net;
 
+import java.io.Serial;
 import java.net.InetAddress;
 
 import org.productivity.java.syslog4j.SyslogRuntimeException;
@@ -18,11 +19,11 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: AbstractNetSyslog.java,v 1.7 2009/01/24 22:00:18 cvs Exp $
 */
 public abstract class AbstractNetSyslog extends AbstractSyslog {
-	private static final long serialVersionUID = -3250858945515853967L;
+	@Serial private static final long serialVersionUID = -3250858945515853967L;
 	
 	protected static final Object cachedHostAddressSyncObject = new Object();
 	
-	protected InetAddress cachedHostAddress = null;
+	protected volatile InetAddress cachedHostAddress = null;
 	
 	protected AbstractNetSyslogConfigIF netSyslogConfig = null;
 	
@@ -39,7 +40,7 @@ public abstract class AbstractNetSyslog extends AbstractSyslog {
 	 * @return Returns an object of InetAddress of the local host, using caching if so directed.
 	 */
 	public InetAddress getHostAddress() {
-		InetAddress hostAddress = null;
+		InetAddress hostAddress;
 		
 		if (this.netSyslogConfig.isCacheHostAddress()) {
 			if (this.cachedHostAddress == null) {

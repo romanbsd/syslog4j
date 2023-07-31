@@ -2,6 +2,7 @@ package org.productivity.java.syslog4j.impl.net.tcp;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serial;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -28,7 +29,7 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 * @version $Id: TCPNetSyslogWriter.java,v 1.20 2010/11/28 01:38:08 cvs Exp $
 */
 public class TCPNetSyslogWriter extends AbstractSyslogWriter {
-	private static final long serialVersionUID = -6388813866108482855L;
+	@Serial private static final long serialVersionUID = -6388813866108482855L;
 
 	protected TCPNetSyslog tcpNetSyslog = null;
 	
@@ -95,9 +96,7 @@ public class TCPNetSyslogWriter extends AbstractSyslogWriter {
 			
 			try {
 				InetAddress hostAddress = this.tcpNetSyslog.getHostAddress();
-				System.out.format("creating TCP connection to %s:%d\n",
-						hostAddress, syslog.getConfig().getPort());
-
+				
 				this.socket = createSocket(hostAddress,this.syslog.getConfig().getPort(),this.tcpNetSyslogConfig.isPersistentConnection());
 				lastSocketCreationTimeMs = System.currentTimeMillis();				
 				

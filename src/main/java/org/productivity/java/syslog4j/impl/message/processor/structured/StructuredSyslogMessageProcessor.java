@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.processor.structured;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.impl.message.processor.AbstractSyslogMessageProcessor;
 import org.productivity.java.syslog4j.impl.message.structured.StructuredSyslogMessage;
 
@@ -30,9 +31,9 @@ import java.time.format.DateTimeFormatter;
  * @version $Id: StructuredSyslogMessageProcessor.java,v 1.4 2011/01/11 05:11:13 cvs Exp $
  */
 public class StructuredSyslogMessageProcessor extends AbstractSyslogMessageProcessor {
-	private static final long serialVersionUID = -1563777226913475257L;
+	@Serial private static final long serialVersionUID = -1563777226913475257L;
 	
-	public static String VERSION = "1";
+	public static final String VERSION = "1";
 
 	private static final StructuredSyslogMessageProcessor INSTANCE = new StructuredSyslogMessageProcessor();
 	protected static StructuredSyslogMessageProcessor defaultInstance = INSTANCE;

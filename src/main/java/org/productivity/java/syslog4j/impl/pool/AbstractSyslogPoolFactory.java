@@ -19,13 +19,11 @@ import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
 * @version $Id: AbstractSyslogPoolFactory.java,v 1.5 2008/12/10 04:15:11 cvs Exp $
 * @see org.productivity.java.syslog4j.impl.pool.generic.GenericSyslogPoolFactory
 */
-public abstract class AbstractSyslogPoolFactory extends BasePoolableObjectFactory {
-	private static final long serialVersionUID = -7441569603980981508L;
-	
+public abstract class AbstractSyslogPoolFactory extends BasePoolableObjectFactory<AbstractSyslogWriter> {
 	protected AbstractSyslog syslog = null;
 	protected AbstractSyslogConfigIF syslogConfig = null;
 	
-	protected ObjectPool pool = null;
+	protected ObjectPool<AbstractSyslogWriter> pool = null;
 	
 	public AbstractSyslogPoolFactory() {
 		//
@@ -44,7 +42,7 @@ public abstract class AbstractSyslogPoolFactory extends BasePoolableObjectFactor
 		this.pool = createPool();
 	}
 
-	public Object makeObject() throws Exception {
+	public AbstractSyslogWriter makeObject() {
 		AbstractSyslogWriter syslogWriter = this.syslog.createWriter();
 		
 		if (this.syslogConfig.isThreaded()) {
@@ -54,20 +52,17 @@ public abstract class AbstractSyslogPoolFactory extends BasePoolableObjectFactor
 		return syslogWriter;
 	}
 
-	public void destroyObject(Object obj) throws Exception {
-		AbstractSyslogWriter writer = (AbstractSyslogWriter) obj;
+	public void destroyObject(AbstractSyslogWriter writer) throws Exception {
 
 		writer.shutdown();
 		
 		super.destroyObject(writer);
 	}
 	
-	public abstract ObjectPool createPool() throws SyslogRuntimeException;
+	public abstract ObjectPool<AbstractSyslogWriter> createPool() throws SyslogRuntimeException;
 	
 	public AbstractSyslogWriter borrowSyslogWriter() throws Exception {
-		AbstractSyslogWriter syslogWriter = (AbstractSyslogWriter) this.pool.borrowObject();
-		
-		return syslogWriter;
+        return this.pool.borrowObject();
 	}
 
 	public void returnSyslogWriter(AbstractSyslogWriter syslogWriter) throws Exception {

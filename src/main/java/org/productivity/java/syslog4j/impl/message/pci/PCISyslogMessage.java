@@ -1,30 +1,31 @@
 package org.productivity.java.syslog4j.impl.message.pci;
 
+import java.io.Serial;
 import java.util.Date;
 import java.util.Map;
 
 import org.productivity.java.syslog4j.impl.message.AbstractSyslogMessage;
 
 /**
-* PCISyslogMessage provides support for audit trails defined by section
-* 10.3 of the PCI Data Security Standard (PCI DSS) versions 1.1 and 1.2.
-* 
-* <p>More information on the PCI DSS specification is available here:</p>
-* 
-* <p>https://www.pcisecuritystandards.org/security_standards/pci_dss.shtml</p>
-* 
-* <p>The PCI DSS specification is Copyright 2008 PCI Security Standards
-* Council LLC.</p>
-* 
-* <p>Syslog4j is licensed under the Lesser GNU Public License v2.1.  A copy
-* of the LGPL license is available in the META-INF folder in all
-* distributions of Syslog4j and in the base directory of the "doc" ZIP.</p>
-* 
-* @author &lt;syslog4j@productivity.org&gt;
-* @version $Id: PCISyslogMessage.java,v 1.3 2008/11/14 04:32:00 cvs Exp $
-*/
+ * PCISyslogMessage provides support for audit trails defined by section
+ * 10.3 of the PCI Data Security Standard (PCI DSS) versions 1.1 and 1.2.
+ *
+ * <p>More information on the PCI DSS specification is available here:</p>
+ *
+ * <p><a href="https://www.pcisecuritystandards.org/security_standards/pci_dss.shtml">...</a></p>
+ *
+ * <p>The PCI DSS specification is Copyright 2008 PCI Security Standards
+ * Council LLC.</p>
+ *
+ * <p>Syslog4j is licensed under the Lesser GNU Public License v2.1.  A copy
+ * of the LGPL license is available in the META-INF folder in all
+ * distributions of Syslog4j and in the base directory of the "doc" ZIP.</p>
+ *
+ * @author &lt;syslog4j@productivity.org&gt;
+ * @version $Id: PCISyslogMessage.java,v 1.3 2008/11/14 04:32:00 cvs Exp $
+ */
 public class PCISyslogMessage extends AbstractSyslogMessage implements PCISyslogMessageIF {
-	private static final long serialVersionUID = 3571696218386879119L;
+	@Serial private static final long serialVersionUID = 3571696218386879119L;
 	
 	public static final String USER_ID				= "userId";
 	public static final String EVENT_TYPE			= "eventType";
@@ -50,7 +51,7 @@ public class PCISyslogMessage extends AbstractSyslogMessage implements PCISyslog
 		init(message);
 	}
 	
-	public PCISyslogMessage(Map fields) {
+	public PCISyslogMessage(Map<String, Object> fields) {
 		init(fields);
 	}
 	
@@ -64,16 +65,16 @@ public class PCISyslogMessage extends AbstractSyslogMessage implements PCISyslog
 		this.affectedResource = message.getAffectedResource();
 	}
 
-	protected void init(Map fields) {
-		if (fields.containsKey(USER_ID)) { this.userId = (String) fields.get(USER_ID); };
-		if (fields.containsKey(EVENT_TYPE)) { this.eventType = (String) fields.get(EVENT_TYPE); };
-		if (fields.containsKey(DATE) && fields.get(DATE) instanceof String) { this.date = (String) fields.get(DATE); };
-		if (fields.containsKey(DATE) && fields.get(DATE) instanceof Date) { setDate((Date) fields.get(DATE)); };
-		if (fields.containsKey(TIME)) { this.time = (String) fields.get(TIME); };
-		if (fields.containsKey(STATUS)) { this.status = (String) fields.get(STATUS); };
-		if (fields.containsKey(ORIGINATION)) { this.origination = (String) fields.get(ORIGINATION); };
-		if (fields.containsKey(AFFECTED_RESOURCE)) { this.affectedResource = (String) fields.get(AFFECTED_RESOURCE); };
-	}
+	protected void init(Map<String, Object> fields) {
+		if (fields.containsKey(USER_ID)) { this.userId = (String) fields.get(USER_ID); }
+        if (fields.containsKey(EVENT_TYPE)) { this.eventType = (String) fields.get(EVENT_TYPE); }
+        if (fields.containsKey(DATE) && fields.get(DATE) instanceof String) { this.date = (String) fields.get(DATE); }
+        if (fields.containsKey(DATE) && fields.get(DATE) instanceof Date) { setDate((Date) fields.get(DATE)); }
+        if (fields.containsKey(TIME)) { this.time = (String) fields.get(TIME); }
+        if (fields.containsKey(STATUS)) { this.status = (String) fields.get(STATUS); }
+        if (fields.containsKey(ORIGINATION)) { this.origination = (String) fields.get(ORIGINATION); }
+        if (fields.containsKey(AFFECTED_RESOURCE)) { this.affectedResource = (String) fields.get(AFFECTED_RESOURCE); }
+    }
 
 	public PCISyslogMessage(String userId, String eventType, String status, String affectedResource) {
 		this.userId = userId;
@@ -160,9 +161,8 @@ public class PCISyslogMessage extends AbstractSyslogMessage implements PCISyslog
 
 	public String getDate() {
 		if (nullOrEmpty(this.date)) {
-			String dateNow = generateDate();
-			
-			return dateNow;
+
+            return generateDate();
 		}
 		
 		return this.date;
@@ -181,9 +181,8 @@ public class PCISyslogMessage extends AbstractSyslogMessage implements PCISyslog
 
 	public String getTime() {
 		if (nullOrEmpty(this.time)) {
-			String timeNow = generateTime();
-			
-			return timeNow;
+
+            return generateTime();
 		}
 		
 		return this.time;
@@ -207,9 +206,8 @@ public class PCISyslogMessage extends AbstractSyslogMessage implements PCISyslog
 
 	public String getOrigination() {
 		if (nullOrEmpty(this.origination)) {
-			String originationHere = generateLocalHostName();
-			
-			return originationHere;
+
+            return generateLocalHostName();
 		}
 		
 		return this.origination;
@@ -232,7 +230,7 @@ public class PCISyslogMessage extends AbstractSyslogMessage implements PCISyslog
 	}
 	
 	public String createMessage() {
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 		
 		char delimiter = getDelimiter();
 		String replaceDelimiter = getReplaceDelimiter();

@@ -1,5 +1,7 @@
 package org.productivity.java.syslog4j.impl.unix;
 
+import java.io.Serial;
+import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslogConfig;
 
@@ -15,7 +17,7 @@ import org.productivity.java.syslog4j.impl.AbstractSyslogConfig;
 * @version $Id: UnixSyslogConfig.java,v 1.13 2010/10/25 03:50:25 cvs Exp $
 */
 public class UnixSyslogConfig extends AbstractSyslogConfig {
-	private static final long serialVersionUID = -4805767812011660656L;
+	@Serial private static final long serialVersionUID = -4805767812011660656L;
 
 	protected String library = SYSLOG_LIBRARY_DEFAULT;
 	protected int option = OPTION_NONE;
@@ -25,7 +27,7 @@ public class UnixSyslogConfig extends AbstractSyslogConfig {
 		this.setSendLocalName(false);
 	}
 
-	public Class getSyslogClass() {
+	public Class<? extends SyslogIF> getSyslogClass() {
 		return UnixSyslog.class;
 	}
 

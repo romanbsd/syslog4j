@@ -17,8 +17,8 @@ import org.productivity.java.syslog4j.SyslogRuntimeException;
 * @version $Id: Syslog4jBackLogHandler.java,v 1.1 2009/07/25 18:42:47 cvs Exp $
 */
 public class Syslog4jBackLogHandler extends AbstractSyslogBackLogHandler {
-	protected SyslogIF syslog = null;
-	protected int downLevel = SyslogConstants.LEVEL_WARN;
+	protected final SyslogIF syslog;
+	protected final int downLevel = SyslogConstants.LEVEL_WARN;
 	protected int upLevel = SyslogConstants.LEVEL_WARN;
 
 	public Syslog4jBackLogHandler(String protocol) {

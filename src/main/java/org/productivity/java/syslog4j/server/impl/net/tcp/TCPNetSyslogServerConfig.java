@@ -1,5 +1,7 @@
 package org.productivity.java.syslog4j.server.impl.net.tcp;
 
+import java.io.Serial;
+import org.productivity.java.syslog4j.server.SyslogServerIF;
 import org.productivity.java.syslog4j.server.impl.net.AbstractNetSyslogServerConfig;
 
 /**
@@ -13,7 +15,7 @@ import org.productivity.java.syslog4j.server.impl.net.AbstractNetSyslogServerCon
 * @version $Id: TCPNetSyslogServerConfig.java,v 1.8 2010/11/28 01:38:08 cvs Exp $
 */
 public class TCPNetSyslogServerConfig extends AbstractNetSyslogServerConfig implements TCPNetSyslogServerConfigIF {
-	private static final long serialVersionUID = -1546696301177599370L;
+	@Serial private static final long serialVersionUID = -1546696301177599370L;
 	
 	protected int timeout = 0;
 	protected int backlog = 0;
@@ -48,7 +50,7 @@ public class TCPNetSyslogServerConfig extends AbstractNetSyslogServerConfig impl
 		this.backlog = backlog;
 	}
 
-	public Class getSyslogServerClass() {
+	public Class<? extends SyslogServerIF> getSyslogServerClass() {
 		return TCPNetSyslogServer.class;
 	}
 	

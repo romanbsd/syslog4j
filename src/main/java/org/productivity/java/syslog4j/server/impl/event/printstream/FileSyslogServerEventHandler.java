@@ -5,18 +5,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.io.Serial;
 
 public class FileSyslogServerEventHandler extends PrintStreamSyslogServerEventHandler {
-	private static final long serialVersionUID = -755824686809731430L;
+	@Serial private static final long serialVersionUID = -755824686809731430L;
 
 	protected static PrintStream createPrintStream(String fileName, boolean append) throws IOException {
 		File file = new File(fileName);
 		
 		OutputStream os = new FileOutputStream(file,append);
-		
-		PrintStream printStream = new PrintStream(os);
-		
-		return printStream;
+
+        return new PrintStream(os);
 	}
 	
 	public FileSyslogServerEventHandler(String fileName) throws IOException {

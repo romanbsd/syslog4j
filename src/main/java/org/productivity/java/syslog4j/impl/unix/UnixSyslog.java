@@ -1,14 +1,14 @@
 package org.productivity.java.syslog4j.impl.unix;
 
+import com.sun.jna.Library;
+import com.sun.jna.Memory;
+import com.sun.jna.Native;
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogMessageProcessorIF;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslog;
 import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
 import org.productivity.java.syslog4j.util.OSDetectUtility;
-
-import com.sun.jna.Library;
-import com.sun.jna.Memory;
-import com.sun.jna.Native;
 
 /**
 * UnixSyslog is an extension of AbstractSyslog that provides support for
@@ -25,14 +25,14 @@ import com.sun.jna.Native;
 * @version $Id: UnixSyslog.java,v 1.27 2010/10/25 04:21:19 cvs Exp $
 */
 public class UnixSyslog extends AbstractSyslog {
-	private static final long serialVersionUID = 4973353204252276740L;
+	@Serial private static final long serialVersionUID = 4973353204252276740L;
 	
 	protected UnixSyslogConfig unixSyslogConfig = null; 
 	
     protected interface CLibrary extends Library {
-        public void openlog(final Memory ident, int option, int facility);
-        public void syslog(int priority, final String format, final String message);
-        public void closelog();
+        void openlog(final Memory ident, int option, int facility);
+        void syslog(int priority, final String format, final String message);
+        void closelog();
     }
     
 	protected static int currentFacility = -1;
@@ -46,7 +46,7 @@ public class UnixSyslog extends AbstractSyslog {
 		}
 		
 		if (libraryInstance == null) {
-			libraryInstance = (CLibrary) Native.loadLibrary(config.getLibrary(),CLibrary.class);
+			libraryInstance = Native.loadLibrary(config.getLibrary(),CLibrary.class);
 		}
 	}
 
@@ -75,7 +75,7 @@ public class UnixSyslog extends AbstractSyslog {
 			if (!openlogCalled) {
 				String ident = config.getIdent();
 				
-				if (ident != null && "".equals(ident.trim())) {
+				if (ident != null && ident.trim().isEmpty()) {
 					ident = null;
 				}
 				
@@ -83,7 +83,7 @@ public class UnixSyslog extends AbstractSyslog {
 				
 				if (ident != null) {
 					identBuffer = new Memory(128);
-					identBuffer.setString(0, ident, false);
+					identBuffer.setString(0, ident, "US-ASCII");
 				}
 				
 				libraryInstance.openlog(identBuffer,config.getOption(),currentFacility);

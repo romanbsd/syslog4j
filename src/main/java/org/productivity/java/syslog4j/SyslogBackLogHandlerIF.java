@@ -23,7 +23,7 @@ public interface SyslogBackLogHandlerIF {
 	 * 
 	 * @throws SyslogRuntimeException
 	 */
-	public void initialize() throws SyslogRuntimeException;
+    void initialize() throws SyslogRuntimeException;
 	
 	/**
 	 * Implement down(syslog,reason) to notify/log when the syslog protocol is unavailable.
@@ -31,14 +31,14 @@ public interface SyslogBackLogHandlerIF {
 	 * @param syslog - SyslogIF instance causing this down condition
 	 * @param reason - reason given for the down condition
 	 */
-	public void down(SyslogIF syslog, String reason);
+    void down(SyslogIF syslog, String reason);
 
 	/**
 	 * Implement up(syslog) to notify/log when the syslog protocol becomes available after a down condition.
 	 * 
 	 * @param syslog - SyslogIF instance which is now available
 	 */
-	public void up(SyslogIF syslog);
+    void up(SyslogIF syslog);
 
 	/**
 	 * @param syslog - SyslogIF instance which cannot handle this log event
@@ -47,5 +47,5 @@ public interface SyslogBackLogHandlerIF {
 	 * @param reason - reason given for why this message could not be handled
 	 * @throws SyslogRuntimeException - throwing this Exception activates the next backlogHandler in the chain 
 	 */
-	public void log(SyslogIF syslog, int level, String message, String reason) throws SyslogRuntimeException;
+    void log(SyslogIF syslog, int level, String message, String reason) throws SyslogRuntimeException;
 }

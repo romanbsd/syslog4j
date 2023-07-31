@@ -1,5 +1,7 @@
 package org.productivity.java.syslog4j.util;
 
+import java.io.IOException;
+
 /**
  * <p>Encodes and decodes to and from Base64 notation.</p>
  * <p>Homepage: <a href="http://iharder.net/base64">http://iharder.net/base64</a>.</p>
@@ -352,7 +354,7 @@ public class Base64
 	 * in which case one of them will be picked, though there is
 	 * no guarantee as to which one will be picked.
 	 */
-	private final static byte[] getAlphabet( int options )
+	private static byte[] getAlphabet(int options)
 	{
 		if( (options & URL_SAFE) == URL_SAFE ) return _URL_SAFE_ALPHABET;
 		else if( (options & ORDERED) == ORDERED ) return _ORDERED_ALPHABET;
@@ -368,7 +370,7 @@ public class Base64
 	 * in which case one of them will be picked, though there is
 	 * no guarantee as to which one will be picked.
 	 */
-	private final static byte[] getDecodabet( int options )
+	private static byte[] getDecodabet(int options)
 	{
 		if( (options & URL_SAFE) == URL_SAFE ) return _URL_SAFE_DECODABET;
 		else if( (options & ORDERED) == ORDERED ) return _ORDERED_DECODABET;
@@ -387,7 +389,7 @@ public class Base64
      * <strong>feel free to delete this method (in fact you probably should)
      * if you're embedding this code into a larger program.</strong>
      */
-    public final static void main( String[] args )
+    public static void main(String[] args)
     {
         if( args.length < 3 ){
             usage("Not enough arguments.");
@@ -413,7 +415,7 @@ public class Base64
      *
      * @param msg A message to include with usage info.
      */
-    private final static void usage( String msg )
+    private static void usage(String msg)
     {
         System.err.println( msg );
         System.err.println( "Usage: java Base64 -e|-d inputfile outputfile" );
@@ -489,31 +491,31 @@ public class Base64
                      | ( numSigBytes > 1 ? ((source[ srcOffset + 1 ] << 24) >>> 16) : 0 )
                      | ( numSigBytes > 2 ? ((source[ srcOffset + 2 ] << 24) >>> 24) : 0 );
 
-        switch( numSigBytes )
-        {
-            case 3:
-                destination[ destOffset     ] = ALPHABET[ (inBuff >>> 18)        ];
-                destination[ destOffset + 1 ] = ALPHABET[ (inBuff >>> 12) & 0x3f ];
-                destination[ destOffset + 2 ] = ALPHABET[ (inBuff >>>  6) & 0x3f ];
-                destination[ destOffset + 3 ] = ALPHABET[ (inBuff       ) & 0x3f ];
+        switch (numSigBytes) {
+            case 3 -> {
+                destination[destOffset] = ALPHABET[(inBuff >>> 18)];
+                destination[destOffset + 1] = ALPHABET[(inBuff >>> 12) & 0x3f];
+                destination[destOffset + 2] = ALPHABET[(inBuff >>> 6) & 0x3f];
+                destination[destOffset + 3] = ALPHABET[(inBuff) & 0x3f];
                 return destination;
-                
-            case 2:
-                destination[ destOffset     ] = ALPHABET[ (inBuff >>> 18)        ];
-                destination[ destOffset + 1 ] = ALPHABET[ (inBuff >>> 12) & 0x3f ];
-                destination[ destOffset + 2 ] = ALPHABET[ (inBuff >>>  6) & 0x3f ];
-                destination[ destOffset + 3 ] = EQUALS_SIGN;
+            }
+            case 2 -> {
+                destination[destOffset] = ALPHABET[(inBuff >>> 18)];
+                destination[destOffset + 1] = ALPHABET[(inBuff >>> 12) & 0x3f];
+                destination[destOffset + 2] = ALPHABET[(inBuff >>> 6) & 0x3f];
+                destination[destOffset + 3] = EQUALS_SIGN;
                 return destination;
-                
-            case 1:
-                destination[ destOffset     ] = ALPHABET[ (inBuff >>> 18)        ];
-                destination[ destOffset + 1 ] = ALPHABET[ (inBuff >>> 12) & 0x3f ];
-                destination[ destOffset + 2 ] = EQUALS_SIGN;
-                destination[ destOffset + 3 ] = EQUALS_SIGN;
+            }
+            case 1 -> {
+                destination[destOffset] = ALPHABET[(inBuff >>> 18)];
+                destination[destOffset + 1] = ALPHABET[(inBuff >>> 12) & 0x3f];
+                destination[destOffset + 2] = EQUALS_SIGN;
+                destination[destOffset + 3] = EQUALS_SIGN;
                 return destination;
-                
-            default:
+            }
+            default -> {
                 return destination;
+            }
         }   // end switch
     }   // end encode3to4
     
@@ -604,18 +606,12 @@ public class Base64
         // Return value according to relevant encoding.
         try 
         {
-        	if (baos != null) {
-        		return new String( baos.toByteArray(), PREFERRED_ENCODING );
-        	}
+            return baos.toString(PREFERRED_ENCODING);
         }   // end try
         catch (java.io.UnsupportedEncodingException uue)
         {
-        	if (baos != null) {
-        		return new String( baos.toByteArray() );
-        	}
+            return baos.toString();
         }   // end catch
-        
-        return null;
     }   // end encode
     
     
@@ -737,18 +733,13 @@ public class Base64
             // Return value according to relevant encoding.
             try
             {
-            	if (baos != null) {
-            		return new String( baos.toByteArray(), PREFERRED_ENCODING );
-            	}
+                return baos.toString(PREFERRED_ENCODING);
             }   // end try
             catch (java.io.UnsupportedEncodingException uue)
             {
-            	if (baos != null) {
-            		return new String( baos.toByteArray() );
-            	}
+                return baos.toString();
             }   // end catch
             
-            return null;
         }   // end if: compress
         
         // Else, don't compress. Better not to use streams at all then.
@@ -885,10 +876,10 @@ public class Base64
 
             return 3;
             }catch( Exception e){
-                System.out.println(""+source[srcOffset]+ ": " + ( DECODABET[ source[ srcOffset     ] ]  ) );
-                System.out.println(""+source[srcOffset+1]+  ": " + ( DECODABET[ source[ srcOffset + 1 ] ]  ) );
-                System.out.println(""+source[srcOffset+2]+  ": " + ( DECODABET[ source[ srcOffset + 2 ] ]  ) );
-                System.out.println(""+source[srcOffset+3]+  ": " + ( DECODABET[ source[ srcOffset + 3 ] ]  ) );
+                System.out.println(source[srcOffset]+ ": " + ( DECODABET[ source[ srcOffset     ] ]  ) );
+                System.out.println(source[srcOffset+1]+  ": " + ( DECODABET[ source[ srcOffset + 1 ] ]  ) );
+                System.out.println(source[srcOffset+2]+  ": " + ( DECODABET[ source[ srcOffset + 2 ] ]  ) );
+                System.out.println(source[srcOffset+3]+  ": " + ( DECODABET[ source[ srcOffset + 3 ] ]  ) );
                 return -1;
             }   // end catch
         }
@@ -1007,37 +998,22 @@ public class Base64
             int head = ((int)bytes[0] & 0xff) | ((bytes[1] << 8) & 0xff00);       
             if( java.util.zip.GZIPInputStream.GZIP_MAGIC == head ) 
             {
-                java.io.ByteArrayInputStream  bais = null;
-                java.util.zip.GZIPInputStream gzis = null;
-                java.io.ByteArrayOutputStream baos = null;
                 byte[] buffer = new byte[2048];
                 int    length = 0;
 
-                try
-                {
-                    baos = new java.io.ByteArrayOutputStream();
-                    bais = new java.io.ByteArrayInputStream( bytes );
-                    gzis = new java.util.zip.GZIPInputStream( bais );
+                try (java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+                        java.io.ByteArrayInputStream bais = new java.io.ByteArrayInputStream(bytes);
+                        java.util.zip.GZIPInputStream gzis = new java.util.zip.GZIPInputStream(bais)) {
 
-                    while( ( length = gzis.read( buffer ) ) >= 0 )
-                    {
-                        baos.write(buffer,0,length);
+                    while ((length = gzis.read(buffer)) >= 0) {
+                        baos.write(buffer, 0, length);
                     }   // end while: reading input
 
                     // No error? Get new bytes.
                     bytes = baos.toByteArray();
-
-                }   // end try
-                catch( java.io.IOException e )
-                {
+                } catch (IOException e) {
                     // Just return originally-decoded bytes
-                }   // end catch
-                finally
-                {
-                    try{ if (baos != null) baos.close(); } catch( Exception e ){}
-                    try{ if (gzis != null) gzis.close(); } catch( Exception e ){}
-                    try{ if (bais != null) bais.close(); } catch( Exception e ){}
-                }   // end finally
+                }
 
             }   // end if: gzipped
         }   // end if: bytes.length >= 2
@@ -1072,16 +1048,12 @@ public class Base64
         
             obj = ois.readObject();
         }   // end try
-        catch( java.io.IOException e )
+        catch(IOException | ClassNotFoundException e )
         {
             e.printStackTrace();
             obj = null;
         }   // end catch
-        catch( java.lang.ClassNotFoundException e )
-        {
-            e.printStackTrace();
-            obj = null;
-        }   // end catch
+        // end catch
         finally
         {
             try{ if (bais != null) bais.close(); } catch( Exception e ){}
@@ -1105,23 +1077,14 @@ public class Base64
     public static boolean encodeToFile( byte[] dataToEncode, String filename )
     {
         boolean success = false;
-        Base64.OutputStream bos = null;
-        try
-        {
-            bos = new Base64.OutputStream( 
-                      new java.io.FileOutputStream( filename ), Base64.ENCODE );
-            bos.write( dataToEncode );
+        try (OutputStream bos = new OutputStream(
+                new java.io.FileOutputStream(filename), Base64.ENCODE)) {
+            bos.write(dataToEncode);
             success = true;
-        }   // end try
-        catch( java.io.IOException e )
-        {
-            
+        } catch (IOException e) {
+
             success = false;
-        }   // end catch: IOException
-        finally
-        {
-            try{ if (bos != null) bos.close(); } catch( Exception e ){}
-        }   // end finally
+        }
         
         return success;
     }   // end encodeToFile
@@ -1139,22 +1102,13 @@ public class Base64
     public static boolean decodeToFile( String dataToDecode, String filename )
     {
         boolean success = false;
-        Base64.OutputStream bos = null;
-        try
-        {
-                bos = new Base64.OutputStream( 
-                          new java.io.FileOutputStream( filename ), Base64.DECODE );
-                bos.write( dataToDecode.getBytes( PREFERRED_ENCODING ) );
-                success = true;
-        }   // end try
-        catch( java.io.IOException e )
-        {
+        try (OutputStream bos = new OutputStream(
+                new java.io.FileOutputStream(filename), Base64.DECODE)) {
+            bos.write(dataToDecode.getBytes(PREFERRED_ENCODING));
+            success = true;
+        } catch (IOException e) {
             success = false;
-        }   // end catch: IOException
-        finally
-        {
-                try{ if (bos != null) bos.close(); } catch( Exception e ){}
-        }   // end finally
+        }
         
         return success;
     }   // end decodeToFile
@@ -1279,26 +1233,20 @@ public class Base64
     public static boolean encodeFileToFile( String infile, String outfile )
     {
         boolean success = false;
-        java.io.InputStream in = null;
-        java.io.OutputStream out = null;
-        try{
-            in  = new Base64.InputStream( 
-                      new java.io.BufferedInputStream( 
-                      new java.io.FileInputStream( infile ) ), 
-                      Base64.ENCODE );
-            out = new java.io.BufferedOutputStream( new java.io.FileOutputStream( outfile ) );
+        try (java.io.InputStream in = new InputStream(
+                new java.io.BufferedInputStream(
+                        new java.io.FileInputStream(infile)),
+                Base64.ENCODE);
+                java.io.OutputStream out = new java.io.BufferedOutputStream(new java.io.FileOutputStream(outfile))) {
             byte[] buffer = new byte[65536]; // 64K
             int read = -1;
-            while( ( read = in.read(buffer) ) >= 0 ){
-                out.write( buffer,0,read );
+            while ((read = in.read(buffer)) >= 0) {
+                out.write(buffer, 0, read);
             }   // end while: through file
             success = true;
-        } catch( java.io.IOException exc ){
+        } catch (IOException exc) {
             exc.printStackTrace();
-        } finally{
-            try{ if (in != null) in.close();  } catch( Exception exc ){}
-            try{ if (out != null) out.close(); } catch( Exception exc ){}
-        }   // end finally
+        }
         
         return success;
     }   // end encodeFileToFile
@@ -1316,26 +1264,20 @@ public class Base64
     public static boolean decodeFileToFile( String infile, String outfile )
     {
         boolean success = false;
-        java.io.InputStream in = null;
-        java.io.OutputStream out = null;
-        try{
-            in  = new Base64.InputStream( 
-                      new java.io.BufferedInputStream( 
-                      new java.io.FileInputStream( infile ) ), 
-                      Base64.DECODE );
-            out = new java.io.BufferedOutputStream( new java.io.FileOutputStream( outfile ) );
+        try (java.io.InputStream in = new InputStream(
+                new java.io.BufferedInputStream(
+                        new java.io.FileInputStream(infile)),
+                Base64.DECODE);
+                java.io.OutputStream out = new java.io.BufferedOutputStream(new java.io.FileOutputStream(outfile))) {
             byte[] buffer = new byte[65536]; // 64K
             int read = -1;
-            while( ( read = in.read(buffer) ) >= 0 ){
-                out.write( buffer,0,read );
+            while ((read = in.read(buffer)) >= 0) {
+                out.write(buffer, 0, read);
             }   // end while: through file
             success = true;
-        } catch( java.io.IOException exc ){
+        } catch (IOException exc) {
             exc.printStackTrace();
-        } finally{
-            try{ if (in != null) in.close();  } catch( Exception exc ){}
-            try{ if (out != null) out.close(); } catch( Exception exc ){}
-        }   // end finally
+        }
         
         return success;
     }   // end decodeFileToFile
@@ -1355,15 +1297,15 @@ public class Base64
      */
     public static class InputStream extends java.io.FilterInputStream
     {
-        private boolean encode;         // Encoding or decoding
+        private final boolean encode;         // Encoding or decoding
         private int     position;       // Current position in the buffer
-        private byte[]  buffer;         // Small buffer holding converted data
-        private int     bufferLength;   // Length of buffer (3 or 4)
+        private final byte[]  buffer;         // Small buffer holding converted data
+        private final int     bufferLength;   // Length of buffer (3 or 4)
         private int     numSigBytes;    // Number of meaningful bytes in the buffer
         private int     lineLength;
-        private boolean breakLines;     // Break lines at less than 80 characters
-		private int     options;        // Record options used to create the stream.
-		private byte[]  decodabet;		// Local copies to avoid extra method calls
+        private final boolean breakLines;     // Break lines at less than 80 characters
+		private final int     options;        // Record options used to create the stream.
+		private final byte[]  decodabet;		// Local copies to avoid extra method calls
         
         
         /**
@@ -1499,38 +1441,28 @@ public class Base64
             }   // end else: get data
             
             // Got data?
-            if( this.position >= 0 )
+            // End of relevant data?
+            if( /*!encode &&*/ this.position >= this.numSigBytes )
+                return -1;
+
+            if( this.encode && this.breakLines && this.lineLength >= MAX_LINE_LENGTH )
             {
-                // End of relevant data?
-                if( /*!encode &&*/ this.position >= this.numSigBytes )
-                    return -1;
-                
-                if( this.encode && this.breakLines && this.lineLength >= MAX_LINE_LENGTH )
-                {
-                	this.lineLength = 0;
-                    return '\n';
-                }   // end if
-                else
-                {
-                	this.lineLength++;   // This isn't important when decoding
-                                    // but throwing an extra "if" seems
-                                    // just as wasteful.
-                    
-                    int b = this.buffer[ this.position++ ];
-
-                    if( this.position >= this.bufferLength )
-                    	this.position = -1;
-
-                    return b & 0xFF; // This is how you "cast" a byte that's
-                                     // intended to be unsigned.
-                }   // end else
-            }   // end if: position >= 0
-            
-            // Else error
+                this.lineLength = 0;
+                return '\n';
+            }   // end if
             else
-            {   
-                // When JDK1.4 is more accepted, use an assertion here.
-                throw new java.io.IOException( "Error in Base64 code reading stream." );
+            {
+                this.lineLength++;   // This isn't important when decoding
+                                // but throwing an extra "if" seems
+                                // just as wasteful.
+
+                int b = this.buffer[ this.position++ ];
+
+                if( this.position >= this.bufferLength )
+                    this.position = -1;
+
+                return b & 0xFF; // This is how you "cast" a byte that's
+                                 // intended to be unsigned.
             }   // end else
         }   // end read
         
@@ -1589,16 +1521,16 @@ public class Base64
      */
     public static class OutputStream extends java.io.FilterOutputStream
     {
-        private boolean encode;
+        private final boolean encode;
         private int     position;
         private byte[]  buffer;
-        private int     bufferLength;
+        private final int     bufferLength;
         private int     lineLength;
-        private boolean breakLines;
-        private byte[]  b4; // Scratch used in a few places
+        private final boolean breakLines;
+        private final byte[]  b4; // Scratch used in a few places
         private boolean suspendEncoding;
-		private int options; // Record for later
-		private byte[]  decodabet;		// Local copies to avoid extra method calls
+		private final int options; // Record for later
+		private final byte[]  decodabet;		// Local copies to avoid extra method calls
         
         /**
          * Constructs a {@link Base64.OutputStream} in ENCODE mode.

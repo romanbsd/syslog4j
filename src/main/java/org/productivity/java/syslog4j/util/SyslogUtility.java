@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.util;
 
+import java.io.Serial;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -20,14 +21,14 @@ import org.productivity.java.syslog4j.SyslogRuntimeException;
 * @version $Id: SyslogUtility.java,v 1.21 2010/11/28 01:38:08 cvs Exp $
 */
 public final class SyslogUtility implements SyslogConstants {
-	private static final long serialVersionUID = 915031554586613648L;
+	@Serial private static final long serialVersionUID = 915031554586613648L;
 	
 	private SyslogUtility() {
 		//
 	}
 	
-	public static final InetAddress getInetAddress(String host) throws SyslogRuntimeException {
-		InetAddress address = null;
+	public static InetAddress getInetAddress(String host) throws SyslogRuntimeException {
+		InetAddress address;
 		
 		try {
 			address = InetAddress.getByName(host);
@@ -39,35 +40,34 @@ public final class SyslogUtility implements SyslogConstants {
 		return address;
 	}
 	
-	public static final String getFacilityString(int syslogFacility) {
-		switch(syslogFacility) {
-			case FACILITY_KERN:			return "kern";
-			case FACILITY_USER:			return "user";
-			case FACILITY_MAIL:			return "mail";
-			case FACILITY_DAEMON:		return "daemon";
-			case FACILITY_AUTH:			return "auth";
-			case FACILITY_SYSLOG:		return "syslog";
-			case FACILITY_LPR:			return "lpr";
-			case FACILITY_NEWS:			return "news";
-			case FACILITY_UUCP:			return "uucp";
-			case FACILITY_CRON:			return "cron";
-			case FACILITY_AUTHPRIV:		return "authpriv";
-			case FACILITY_FTP:			return "ftp";
-			case FACILITY_LOCAL0:		return "local0";
-			case FACILITY_LOCAL1:		return "local1";
-			case FACILITY_LOCAL2:		return "local2";
-			case FACILITY_LOCAL3:		return "local3";
-			case FACILITY_LOCAL4:		return "local4";
-			case FACILITY_LOCAL5:		return "local5";
-			case FACILITY_LOCAL6:		return "local6";
-			case FACILITY_LOCAL7:		return "local7";
-			
-			default:					return "UNKNOWN";
-		}
+	public static String getFacilityString(int syslogFacility) {
+        return switch (syslogFacility) {
+            case FACILITY_KERN -> "kern";
+            case FACILITY_USER -> "user";
+            case FACILITY_MAIL -> "mail";
+            case FACILITY_DAEMON -> "daemon";
+            case FACILITY_AUTH -> "auth";
+            case FACILITY_SYSLOG -> "syslog";
+            case FACILITY_LPR -> "lpr";
+            case FACILITY_NEWS -> "news";
+            case FACILITY_UUCP -> "uucp";
+            case FACILITY_CRON -> "cron";
+            case FACILITY_AUTHPRIV -> "authpriv";
+            case FACILITY_FTP -> "ftp";
+            case FACILITY_LOCAL0 -> "local0";
+            case FACILITY_LOCAL1 -> "local1";
+            case FACILITY_LOCAL2 -> "local2";
+            case FACILITY_LOCAL3 -> "local3";
+            case FACILITY_LOCAL4 -> "local4";
+            case FACILITY_LOCAL5 -> "local5";
+            case FACILITY_LOCAL6 -> "local6";
+            case FACILITY_LOCAL7 -> "local7";
+            default -> "UNKNOWN";
+        };
 	}
 	  
-	public static final int getFacility(String facilityName) {
-		String _facilityName = facilityName;
+	public static int getFacility(String facilityName) {
+		String _facilityName;
 		
 		if (facilityName == null) {
 			return -1;
@@ -100,8 +100,8 @@ public final class SyslogUtility implements SyslogConstants {
 		}
 	}
 	
-	public static final int getLevel(String levelName) {
-		String _levelName = levelName;
+	public static int getLevel(String levelName) {
+		String _levelName;
 		
 		if (levelName == null) {
 			return -1;
@@ -122,7 +122,7 @@ public final class SyslogUtility implements SyslogConstants {
 		}
 	}
 
-	public static final boolean isClassExists(String className) {
+	public static boolean isClassExists(String className) {
 		try {
 			Class.forName(className);
 			return true;
@@ -134,7 +134,7 @@ public final class SyslogUtility implements SyslogConstants {
 		return false;
 	}
 	
-	public static final String getLocalName() {
+	public static String getLocalName() {
 		String localName = SEND_LOCAL_NAME_DEFAULT_VALUE;
 		
         try {
@@ -148,8 +148,8 @@ public final class SyslogUtility implements SyslogConstants {
         return localName;
 	}
 	
-	public static final byte[] getBytes(SyslogCharSetIF syslogCharSet, String data) {
-		byte[] dataBytes = null;
+	public static byte[] getBytes(SyslogCharSetIF syslogCharSet, String data) {
+		byte[] dataBytes;
 		
 		try {
 			dataBytes = data.getBytes(syslogCharSet.getCharSet());
@@ -161,14 +161,13 @@ public final class SyslogUtility implements SyslogConstants {
 		return dataBytes;
 	}
 	
-	public static final String newString(SyslogCharSetIF syslogCharSet, byte[] dataBytes) {
-		String data = newString(syslogCharSet,dataBytes,dataBytes.length);
-		
-		return data;
+	public static String newString(SyslogCharSetIF syslogCharSet, byte[] dataBytes) {
+
+        return newString(syslogCharSet,dataBytes,dataBytes.length);
 	}
 
-	public static final String newString(SyslogCharSetIF syslogCharSet, byte[] dataBytes, int dataLength) {
-		String data = null;
+	public static String newString(SyslogCharSetIF syslogCharSet, byte[] dataBytes, int dataLength) {
+		String data;
 		
 		try {
 			data = new String(dataBytes,0,dataLength,syslogCharSet.getCharSet());
@@ -180,20 +179,18 @@ public final class SyslogUtility implements SyslogConstants {
 		return data;
 	}
 
-	public static final String getLevelString(int level) {
-		switch(level) {
-			case SyslogConstants.LEVEL_DEBUG: return "DEBUG";
-			case SyslogConstants.LEVEL_INFO: return "INFO";
-			case SyslogConstants.LEVEL_NOTICE: return "NOTICE";
-			case SyslogConstants.LEVEL_WARN: return "WARN";
-			case SyslogConstants.LEVEL_ERROR: return "ERROR";
-			case SyslogConstants.LEVEL_CRITICAL: return "CRITICAL";
-			case SyslogConstants.LEVEL_ALERT: return "ALERT";
-			case SyslogConstants.LEVEL_EMERGENCY: return "EMERGENCY";
-			
-			default:
-				return "UNKNOWN";
-		}
+	public static String getLevelString(int level) {
+        return switch (level) {
+            case SyslogConstants.LEVEL_DEBUG -> "DEBUG";
+            case SyslogConstants.LEVEL_INFO -> "INFO";
+            case SyslogConstants.LEVEL_NOTICE -> "NOTICE";
+            case SyslogConstants.LEVEL_WARN -> "WARN";
+            case SyslogConstants.LEVEL_ERROR -> "ERROR";
+            case SyslogConstants.LEVEL_CRITICAL -> "CRITICAL";
+            case SyslogConstants.LEVEL_ALERT -> "ALERT";
+            case SyslogConstants.LEVEL_EMERGENCY -> "EMERGENCY";
+            default -> "UNKNOWN";
+        };
 	}
 	
 	

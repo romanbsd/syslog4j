@@ -12,6 +12,6 @@ package org.productivity.java.syslog4j;
 * @version $Id: SyslogMessageModifierIF.java,v 1.4 2010/10/28 05:10:57 cvs Exp $
 */
 public interface SyslogMessageModifierIF extends SyslogConstants {
-	public String modify(SyslogIF syslog, int facility, int level, String message);
-	public boolean verify(String message);
+	String modify(SyslogIF syslog, int facility, int level, String message);
+	boolean verify(String message);
 }

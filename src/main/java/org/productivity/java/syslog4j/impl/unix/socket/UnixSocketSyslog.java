@@ -3,6 +3,7 @@ package org.productivity.java.syslog4j.impl.unix.socket;
 import com.sun.jna.Library;
 import com.sun.jna.Native;
 import com.sun.jna.Structure;
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslog;
 import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
@@ -27,14 +28,14 @@ import java.util.List;
 * @version $Id: UnixSocketSyslog.java,v 1.13 2010/11/16 00:52:01 cvs Exp $
 */
 public class UnixSocketSyslog extends AbstractSyslog {
-	private static final long serialVersionUID = 39878807911936785L;
+	@Serial private static final long serialVersionUID = 39878807911936785L;
 	
 	protected static class SockAddr extends Structure {
 		public final static int SUN_PATH_SIZE = 108;
 		public final static byte[] ZERO_BYTE = new byte[] { 0 };
 		
 		public short sun_family = 1;
-		public byte[] sun_path = new byte[SUN_PATH_SIZE];
+		public final byte[] sun_path = new byte[SUN_PATH_SIZE];
 		
 		public void setSunPath(String sunPath) {
 			System.arraycopy(sunPath.getBytes(), 0,this.sun_path, 0, sunPath.length());
@@ -48,11 +49,11 @@ public class UnixSocketSyslog extends AbstractSyslog {
 	}
 	
     protected interface CLibrary extends Library {
-        public int socket(int domain, int type, int protocol);
-        public int connect(int sockfd, SockAddr sockaddr, int addrlen);
-        public int write(int fd, ByteBuffer buffer, int count);
-        public int close(int fd);
-        public String strerror(int errno);
+        int socket(int domain, int type, int protocol);
+        int connect(int sockfd, SockAddr sockaddr, int addrlen);
+        int write(int fd, ByteBuffer buffer, int count);
+        int close(int fd);
+        String strerror(int errno);
     }
     
 	protected boolean libraryLoaded = false;
@@ -67,7 +68,7 @@ public class UnixSocketSyslog extends AbstractSyslog {
 		}
 		
 		if (!this.libraryLoaded) {
-			this.libraryInstance = (CLibrary) Native.loadLibrary(this.unixSocketSyslogConfig.getLibrary(),CLibrary.class);
+			this.libraryInstance = Native.loadLibrary(this.unixSocketSyslogConfig.getLibrary(),CLibrary.class);
 			this.libraryLoaded = true;
 		}
 	}
@@ -92,8 +93,7 @@ public class UnixSocketSyslog extends AbstractSyslog {
 		this.fd = this.libraryInstance.socket(this.unixSocketSyslogConfig.getFamily(),this.unixSocketSyslogConfig.getType(),this.unixSocketSyslogConfig.getProtocol());
 		
 		if (this.fd == -1) {
-			this.fd = -1;
-			return;
+            return;
 		}
 		
 		SockAddr sockAddr = new SockAddr();
@@ -105,8 +105,7 @@ public class UnixSocketSyslog extends AbstractSyslog {
 
 		if (c == -1) {
 			this.fd = -1;
-			return;
-		}		
+        }
 	}
 
 	protected void write(int level, byte[] message) throws SyslogRuntimeException {

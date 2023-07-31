@@ -3,6 +3,7 @@ package org.productivity.java.syslog4j.server.impl.event.structured;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatterBuilder;
+import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogConstants;
 import org.productivity.java.syslog4j.impl.message.structured.StructuredSyslogMessage;
 import org.productivity.java.syslog4j.server.impl.event.SyslogServerEvent;
@@ -31,7 +32,7 @@ import java.util.Date;
  * @version $Id: StructuredSyslogServerEvent.java,v 1.6 2011/01/11 05:11:13 cvs Exp $
  */
 public class StructuredSyslogServerEvent extends SyslogServerEvent {
-	private static final long serialVersionUID = 1676499796406044315L;
+	@Serial private static final long serialVersionUID = 1676499796406044315L;
 
 	protected String applicationName = SyslogConstants.STRUCTURED_DATA_APP_NAME_DEFAULT_VALUE;
 	protected String processId = null;

@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl.message.modifier.hash;
 
+import java.io.Serial;
 import org.productivity.java.syslog4j.impl.message.modifier.AbstractSyslogMessageModifierConfig;
 
 /**
@@ -14,42 +15,37 @@ import org.productivity.java.syslog4j.impl.message.modifier.AbstractSyslogMessag
 * @version $Id: HashSyslogMessageModifierConfig.java,v 1.1 2008/11/10 04:38:37 cvs Exp $
 */
 public class HashSyslogMessageModifierConfig extends AbstractSyslogMessageModifierConfig {
-	private static final long serialVersionUID = -3148300281439874231L;
+	@Serial private static final long serialVersionUID = -3148300281439874231L;
 	
-	protected String hashAlgorithm = null;
+	protected String hashAlgorithm;
 	
-	public static final HashSyslogMessageModifierConfig createMD5() {
-		HashSyslogMessageModifierConfig md5 = new HashSyslogMessageModifierConfig("MD5");
-		
-		return md5;
+	public static HashSyslogMessageModifierConfig createMD5() {
+
+        return new HashSyslogMessageModifierConfig("MD5");
 	}
 	
-	public static final HashSyslogMessageModifierConfig createSHA1() {
-		HashSyslogMessageModifierConfig sha1 = new HashSyslogMessageModifierConfig("SHA1");
-		
-		return sha1;
+	public static HashSyslogMessageModifierConfig createSHA1() {
+
+        return new HashSyslogMessageModifierConfig("SHA1");
 	}
 	
-	public static final HashSyslogMessageModifierConfig createSHA160() {
+	public static HashSyslogMessageModifierConfig createSHA160() {
 		 return createSHA1();
 	}
 	
-	public static final HashSyslogMessageModifierConfig createSHA256() {
-		HashSyslogMessageModifierConfig sha256 = new HashSyslogMessageModifierConfig("SHA-256");
-		
-		return sha256;
+	public static HashSyslogMessageModifierConfig createSHA256() {
+
+        return new HashSyslogMessageModifierConfig("SHA-256");
 	}
 	
-	public static final HashSyslogMessageModifierConfig createSHA384() {
-		HashSyslogMessageModifierConfig sha384 = new HashSyslogMessageModifierConfig("SHA-384");
-		
-		return sha384;
+	public static HashSyslogMessageModifierConfig createSHA384() {
+
+        return new HashSyslogMessageModifierConfig("SHA-384");
 	}
 	
-	public static final HashSyslogMessageModifierConfig createSHA512() {
-		HashSyslogMessageModifierConfig sha512 = new HashSyslogMessageModifierConfig("SHA-512");
-		
-		return sha512;
+	public static HashSyslogMessageModifierConfig createSHA512() {
+
+        return new HashSyslogMessageModifierConfig("SHA-512");
 	}
 	
 	public HashSyslogMessageModifierConfig(String hashAlgorithm) {

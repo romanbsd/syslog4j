@@ -1,0 +1,20 @@
+plugins {
+    id 'java-library'
+}
+
+group 'org.productivity.java.syslog4j'
+version '0.9.46'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    implementation 'commons-pool:commons-pool:1.6'
+    implementation 'net.java.dev.jna:jna-platform:4.3.0'
+}

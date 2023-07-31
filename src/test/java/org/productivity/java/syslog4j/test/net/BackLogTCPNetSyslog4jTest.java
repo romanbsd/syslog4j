@@ -70,7 +70,7 @@ public class BackLogTCPNetSyslog4jTest extends AbstractNetSyslog4jTest {
 	}
 
 	public void testSendReceive() {
-		Thread t = new Thread(new ThreadStarter(2500,"tcp"));
+		Thread t = new Thread(new ThreadStarter(200,"tcp"));
 		t.start();
 		
 		List<String> backLogEvents = new ArrayList<>();

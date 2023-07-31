@@ -3,8 +3,6 @@ package org.productivity.java.syslog4j.server;
 import java.io.Serial;
 import java.util.Hashtable;
 import java.util.Map;
-import java.util.Set;
-
 import org.productivity.java.syslog4j.Syslog4jVersion;
 import org.productivity.java.syslog4j.SyslogConstants;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
@@ -208,12 +206,7 @@ public class SyslogServer implements SyslogConstants {
 	}
 	
 	public synchronized static void shutdown() throws SyslogRuntimeException {
-		Set<String> protocols = instances.keySet();
-
-        for (String protocol : protocols) {
-
-            SyslogServerIF syslogServer = instances.get(protocol);
-
+        for (SyslogServerIF syslogServer : instances.values()) {
             syslogServer.shutdown();
         }
 

@@ -402,29 +402,25 @@ public abstract class AbstractNetSyslog4jTest extends AbstractBaseTest {
             thread.start();
         }
 
-        SyslogUtility.sleep(100);
-
         syslog.flush();
 
         if (backLogEvents != null) {
-            List<String> recordedEvents = this.recorderEventHandler.getRecordedEvents();
-
-            int haveCount = recordedEvents.size() + backLogEvents.size();
-
             long startTime = System.currentTimeMillis();
-
-            while (haveCount < events.size()) {
-                System.out.println("Count: " + haveCount + "/" + events.size());
-                SyslogUtility.sleep(250);
-
+            List<String> recordedEvents;
+            int haveCount;
+            do {
+                recordedEvents = this.recorderEventHandler.getRecordedEvents();
                 haveCount = recordedEvents.size() + backLogEvents.size();
+
+                System.out.println("Count: " + haveCount + "/" + events.size());
+                SyslogUtility.sleep(100);
 
                 long currentTime = System.currentTimeMillis();
 
                 if ((currentTime - startTime) > 5000) {
                     break;
                 }
-            }
+            } while (haveCount < events.size());
 
             System.out.println("Sent Events:     " + events.size());
             System.out.println("BackLog Events:  " + backLogEvents.size());

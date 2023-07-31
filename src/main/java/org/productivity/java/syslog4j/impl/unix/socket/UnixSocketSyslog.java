@@ -1,15 +1,16 @@
 package org.productivity.java.syslog4j.impl.unix.socket;
 
-import java.nio.ByteBuffer;
-
+import com.sun.jna.Library;
+import com.sun.jna.Native;
+import com.sun.jna.Structure;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslog;
 import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
 import org.productivity.java.syslog4j.util.OSDetectUtility;
 
-import com.sun.jna.Library;
-import com.sun.jna.Native;
-import com.sun.jna.Structure;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.List;
 
 /**
 * UnixSocketSyslog is an extension of AbstractSyslog that provides support for
@@ -38,6 +39,11 @@ public class UnixSocketSyslog extends AbstractSyslog {
 		public void setSunPath(String sunPath) {
 			System.arraycopy(sunPath.getBytes(), 0,this.sun_path, 0, sunPath.length());
 			System.arraycopy(ZERO_BYTE,0,this.sun_path,sunPath.length(),1);
+		}
+
+		@Override
+		protected List<String> getFieldOrder() {
+			return Arrays.asList("sa_family", "sa_data");
 		}
 	}
 	

@@ -1,9 +1,10 @@
 package org.productivity.java.syslog4j.impl.message.processor.structured;
 
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
 import org.productivity.java.syslog4j.impl.message.processor.AbstractSyslogMessageProcessor;
 import org.productivity.java.syslog4j.impl.message.structured.StructuredSyslogMessage;
+
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * SyslogStructuredMessageProcessor extends SyslogMessageProcessor's ability to
@@ -39,7 +40,7 @@ public class StructuredSyslogMessageProcessor extends AbstractSyslogMessageProce
 	private String applicationName = STRUCTURED_DATA_APP_NAME_DEFAULT_VALUE;
 	private String processId = STRUCTURED_DATA_PROCESS_ID_DEFAULT_VALUE;
 	
-	private DateTimeFormatter dateTimeFormatter = ISODateTimeFormat.dateTime();
+	private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd'T'HH:mm:ss[xxx]");
 
 	public static void setDefault(StructuredSyslogMessageProcessor messageProcessor) {
 		if (messageProcessor != null) {
@@ -91,7 +92,7 @@ public class StructuredSyslogMessageProcessor extends AbstractSyslogMessageProce
 		buffer.append(VERSION);
 		buffer.append(' ');
 
-		getDateTimeFormatter().printTo(buffer,System.currentTimeMillis());
+		getDateTimeFormatter().formatTo(OffsetDateTime.now(), buffer);
 		buffer.append(' ');
 
 		appendLocalName(buffer,localName);

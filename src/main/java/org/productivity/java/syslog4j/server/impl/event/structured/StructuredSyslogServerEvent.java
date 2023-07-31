@@ -1,7 +1,5 @@
 package org.productivity.java.syslog4j.server.impl.event.structured;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatterBuilder;
 import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogConstants;
@@ -19,7 +17,7 @@ import java.util.Date;
  * messages, as defined in:
  *
  * <p>
- * http://tools.ietf.org/html/draft-ietf-syslog-protocol-23#section-6
+ * <a href="http://tools.ietf.org/html/draft-ietf-syslog-protocol-23#section-6">...</a>
  * </p>
  *
  * <p>
@@ -113,8 +111,7 @@ public class StructuredSyslogServerEvent extends SyslogServerEvent {
 
 			try {
 				DateTimeFormatter formatter = getDateTimeFormatter();
-				LocalDateTime localDateTime = LocalDateTime.parse(dateString, formatter);
-				this.dateTime = localDateTime.atOffset(ZoneOffset.UTC);
+				this.dateTime = OffsetDateTime.parse(dateString, formatter);
 				this.date = Date.from(dateTime.toInstant());
 
 				this.message = this.message.substring(dateString.length() + 1);

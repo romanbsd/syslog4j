@@ -1,5 +1,6 @@
 package org.productivity.java.syslog4j.impl;
 
+import org.productivity.java.syslog4j.impl.backlog.printstream.SystemErrSyslogBackLogHandler;
 import java.io.Serial;
 import org.productivity.java.syslog4j.SyslogBackLogHandlerIF;
 import org.productivity.java.syslog4j.SyslogIF;
@@ -25,6 +26,10 @@ public abstract class AbstractSyslogConfig implements AbstractSyslogConfigIF {
     @Serial private static final long serialVersionUID = -3728308557871358111L;
 
     private final static List<SyslogBackLogHandlerIF> defaultBackLogHandlers = new ArrayList<>();
+
+    static {
+        defaultBackLogHandlers.add(new SystemErrSyslogBackLogHandler());
+    }
 
     protected int facility = SYSLOG_FACILITY_DEFAULT;
 

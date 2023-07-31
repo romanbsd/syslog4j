@@ -44,11 +44,11 @@ public class PrintStreamServerEventTest extends TestCase {
 		eventHandler.event(null,server,null,event);
 		eventHandler.exception(null,server,null,null);
 		eventHandler.sessionClosed(null,server,null,false);
-		assertEquals(event.getMessage(),new String("test message"));
+		assertEquals(event.getMessage(), "test message");
 
 		Date date = new Date();
 		event.setDate(date);
-		assertTrue(date == event.getDate());
+        assertSame(date, event.getDate());
 		
 		event.setFacility(SyslogConstants.FACILITY_LOCAL0);
 		assertEquals(SyslogConstants.FACILITY_LOCAL0,event.getFacility());

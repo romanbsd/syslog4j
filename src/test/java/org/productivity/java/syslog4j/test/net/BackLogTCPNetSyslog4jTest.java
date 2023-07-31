@@ -14,9 +14,9 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 
 public class BackLogTCPNetSyslog4jTest extends AbstractNetSyslog4jTest {
 	public static class TestBackLogHandler implements SyslogBackLogHandlerIF {
-		protected List events = null;
+		protected final List<String> events;
 		
-		public TestBackLogHandler(List events) {
+		public TestBackLogHandler(List<String> events) {
 			this.events = events;
 		}
 		
@@ -40,8 +40,8 @@ public class BackLogTCPNetSyslog4jTest extends AbstractNetSyslog4jTest {
 	}
 	
 	public static class ThreadStarter implements Runnable {
-		protected long pause = -1;
-		protected String protocol = null;
+		protected final long pause;
+		protected final String protocol;
 		
 		public ThreadStarter(long pause, String protocol) {
 			this.pause = pause;
@@ -73,7 +73,7 @@ public class BackLogTCPNetSyslog4jTest extends AbstractNetSyslog4jTest {
 		Thread t = new Thread(new ThreadStarter(2500,"tcp"));
 		t.start();
 		
-		List backLogEvents = new ArrayList();
+		List<String> backLogEvents = new ArrayList<>();
 		
 		TestBackLogHandler bh = new TestBackLogHandler(backLogEvents);
 		bh.initialize();

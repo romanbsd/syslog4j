@@ -164,9 +164,9 @@ public final class Syslog implements SyslogConstants {
 			}
 			
 			try {
-				Class<?> syslogClass = config.getSyslogClass();
+				Class<? extends SyslogIF> syslogClass = config.getSyslogClass();
 				
-				syslog = (SyslogIF) syslogClass.getDeclaredConstructor().newInstance();
+				syslog = syslogClass.getDeclaredConstructor().newInstance();
 				
 			} catch (ReflectiveOperationException cse) {
 				if (!config.isThrowExceptionOnInitialize()) {

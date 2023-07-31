@@ -9,9 +9,8 @@ import org.productivity.java.syslog4j.impl.AbstractSyslogWriter;
 import org.productivity.java.syslog4j.util.SyslogUtility;
 
 public class SplitSyslog extends AbstractSyslog {
-	private static final long serialVersionUID = -2860454535112047368L;
-	
-	public List lastMessages = new ArrayList();
+
+	public final List<String> lastMessages = new ArrayList<>();
 
 	protected void initialize() throws SyslogRuntimeException {
 		// NO-OP
@@ -29,7 +28,7 @@ public class SplitSyslog extends AbstractSyslog {
 		this.lastMessages.add(lastMessage);
 	}
 	
-	public List getLastMessages() {
+	public List<String> getLastMessages() {
 		return this.lastMessages;
 	}
 

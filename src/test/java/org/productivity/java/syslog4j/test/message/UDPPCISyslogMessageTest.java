@@ -10,7 +10,7 @@ import org.productivity.java.syslog4j.test.net.base.AbstractNetSyslog4jTest;
 import org.productivity.java.syslog4j.util.SyslogUtility;
 
 public class UDPPCISyslogMessageTest extends AbstractNetSyslog4jTest {
-	protected static int pause = 100;
+	protected static final int pause = 100;
 	
 	protected int getMessageCount() {
 		return -1;
@@ -27,8 +27,8 @@ public class UDPPCISyslogMessageTest extends AbstractNetSyslog4jTest {
 	public void testPCISyslogMessage() {
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);

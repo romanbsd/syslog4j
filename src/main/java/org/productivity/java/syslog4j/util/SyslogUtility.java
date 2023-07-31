@@ -126,11 +126,9 @@ public final class SyslogUtility implements SyslogConstants {
 		try {
 			Class.forName(className);
 			return true;
-			
-		} catch (ClassNotFoundException cnfe) {
+		} catch (ClassNotFoundException | UnsatisfiedLinkError | NoClassDefFoundError cnfe) {
 			//
 		}
-		
 		return false;
 	}
 	

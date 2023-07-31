@@ -17,9 +17,7 @@ import org.productivity.java.syslog4j.server.impl.net.tcp.TCPNetSyslogServerConf
 import org.productivity.java.syslog4j.util.SyslogUtility;
 
 public class MaxActiveSocketsTest extends TestCase {
-	public class Counter implements SyslogServerSessionlessEventHandlerIF {
-		private static final long serialVersionUID = 3262828090646744251L;
-		
+	public static class Counter implements SyslogServerSessionlessEventHandlerIF {
 		public int counter = 0;
 
 		public void initialize(SyslogServerIF syslogServer) {

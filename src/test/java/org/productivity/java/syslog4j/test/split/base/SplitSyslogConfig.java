@@ -1,20 +1,17 @@
 package org.productivity.java.syslog4j.test.split.base;
 
+import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogRuntimeException;
 import org.productivity.java.syslog4j.impl.AbstractSyslogConfig;
 
 public class SplitSyslogConfig extends AbstractSyslogConfig {
-	private static final long serialVersionUID = 6192648434706811381L;
 
-	public Class getSyslogClass() {
+	@Override
+	public Class<? extends SyslogIF> getSyslogClass() {
 		return SplitSyslog.class;
 	}
 
 	public String getHost() {
-		return null;
-	}
-
-	public String getSocketPath() {
 		return null;
 	}
 

@@ -41,13 +41,7 @@ public class PooledSSLTCPNetSyslog4jTest extends AbstractNetSyslog4jTest {
 		
 		return "pooledSslTcp";
 	}
-	
-	public void _testOne() {
-		setupPoolConfig(false,0,0);
-		
-		getSyslog("pooledSslTcp").info("[TEST] test");
-	}
-	
+
 	public void testThreadedSendReceive_50_threaded() {
 		setupPoolConfig(true,0,8000);
 		

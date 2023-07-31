@@ -43,8 +43,8 @@ public class MaxQueueSizeTest extends TestCase {
 	}
 	
 	public static class FakeSyslogServer implements Runnable {
-		public int port = 0;
-		public int catchCount = 0;
+		public final int port;
+		public final int catchCount;
 		
 		public boolean shutdown = false;
 		public int count = 0;
@@ -55,7 +55,7 @@ public class MaxQueueSizeTest extends TestCase {
 		}
 		
 		public void run() {
-			ServerSocket serverSocket = null;
+			ServerSocket serverSocket;
 			
 			ServerSocketFactory factory = ServerSocketFactory.getDefault();
 			

@@ -22,13 +22,11 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 
 public class SyslogServerSessionTest extends TestCase {
 	public static class TCPSessionHandler implements SyslogServerSessionEventHandlerIF {
-		private static final long serialVersionUID = -5516122648345973259L;
-		
 		public static int currentSession = 0;
 		public static final String[] SESSIONS = { "one", "two", "three", "four" };
-		public String id = null;
-		public int eventCount[] = new int[4];
-		public int closeCount[] = new int[4];
+		public final String id;
+		public final int[] eventCount = new int[4];
+		public final int[] closeCount = new int[4];
 		public boolean initialized = false;
 		public boolean destroyed = false;
 		
@@ -87,7 +85,7 @@ public class SyslogServerSessionTest extends TestCase {
 		public void exception(Object session, SyslogServerIF syslogServer, SocketAddress socketAddress, Exception exception) {
 			// This section is not (yet) tested; a bit tricky to cause a SocketException -- but not impossible
 			if (session != null) {
-				System.out.println("exception: " + id + "/" + session.toString() + ": " + exception);
+				System.out.println("exception: " + id + "/" + session + ": " + exception);
 				
 			} else {
 				System.out.println("exception: " + id + ": " + exception);
@@ -112,11 +110,8 @@ public class SyslogServerSessionTest extends TestCase {
 		}
 	}
 
-	public class UDPSessionHandler implements SyslogServerSessionEventHandlerIF {
-		private static final long serialVersionUID = 6854997677465025089L;
-		
-		public int currentSession = 0;
-		public String id = null;
+	public static class UDPSessionHandler implements SyslogServerSessionEventHandlerIF {
+		public final String id;
 		
 		public boolean okay = true;
 		public boolean initialized = false;

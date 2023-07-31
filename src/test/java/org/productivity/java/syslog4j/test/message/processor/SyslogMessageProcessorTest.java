@@ -35,7 +35,7 @@ public class SyslogMessageProcessorTest extends AbstractBaseTest {
 		byte[] h = "<15> Oct  5 00:00:00 ".getBytes();
 		byte[] m = "For now is the time".getBytes();
 		
-		byte[] d = null;
+		byte[] d;
 		
 		d = syslogMessageProcessor.createPacketData(h,m,0,8,null,"..".getBytes());
 		System.out.println(new String(d));

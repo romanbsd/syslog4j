@@ -1,11 +1,5 @@
 package org.productivity.java.syslog4j.test.net;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-
-import org.junit.Ignore;
 import org.productivity.java.syslog4j.Syslog;
 import org.productivity.java.syslog4j.impl.net.tcp.ssl.SSLTCPNetSyslogConfig;
 import org.productivity.java.syslog4j.server.SyslogServer;

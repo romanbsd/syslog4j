@@ -32,12 +32,8 @@ public class UDPNetSyslog4jTest extends AbstractNetSyslog4jTest {
 	public void testSendReceive() {
 		super._testSendReceive(true,true);
 	}
-	
-	public void xtestThreadedSendReceive() {
-		super._testThreadedSendReceive(10,true,true);
-	}
-	
-	public void testPCIMessages() {
+
+    public void testPCIMessages() {
 		super._testSendReceivePCIMessages(true,true);
 	}
 

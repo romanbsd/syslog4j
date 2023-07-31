@@ -4,8 +4,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.junit.Ignore;
-import org.junit.Test;
 import org.productivity.java.syslog4j.Syslog;
 import org.productivity.java.syslog4j.SyslogConfigIF;
 import org.productivity.java.syslog4j.SyslogIF;
@@ -36,14 +34,14 @@ public class SplitSyslogTest extends TestCase {
 	protected void assertSyslog(SyslogIF syslog, String[] expectedMessages) {
 		SplitSyslog splitSyslog = (SplitSyslog) syslog;
 		
-		List lastMessages = splitSyslog.getLastMessages();
+		List<String> lastMessages = splitSyslog.getLastMessages();
 		
-		if (lastMessages.size() < 1) {
+		if (lastMessages.isEmpty()) {
 			fail("No messages received");
 		}
 		
 		for(int i=0; i<lastMessages.size(); i++) {
-			String lastMessage = ((String) lastMessages.get(i)).substring(21 + this.localNameLength);
+			String lastMessage = lastMessages.get(i).substring(21 + this.localNameLength);
 			
 			assertEquals(expectedMessages[i],lastMessage);
 		}

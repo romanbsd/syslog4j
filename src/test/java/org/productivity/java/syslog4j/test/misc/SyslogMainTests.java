@@ -7,7 +7,7 @@ import org.productivity.java.syslog4j.server.SyslogServerMain;
 
 public class SyslogMainTests extends TestCase {
 	public void testSyslogMainSuccesses() {
-		SyslogMain.Options options = null;
+		SyslogMain.Options options;
 		
 		options = SyslogMain.parseOptions(new String[] { "udp" });
 		assertNull(options.usage);
@@ -63,7 +63,7 @@ public class SyslogMainTests extends TestCase {
 	}
 
 	public void testSyslogMainFailures() {
-		SyslogMain.Options options = null;
+		SyslogMain.Options options;
 
 		options = SyslogMain.parseOptions(new String[] { });
 		assertEquals("Must specify protocol",options.usage);
@@ -93,7 +93,7 @@ public class SyslogMainTests extends TestCase {
 	}
 	
 	public void testSyslogServerMainSuccesses() {
-		SyslogServerMain.Options options = null;
+		SyslogServerMain.Options options;
 		
 		options = SyslogServerMain.parseOptions(new String[] { "udp" });
 		assertNull(options.usage);
@@ -129,7 +129,7 @@ public class SyslogMainTests extends TestCase {
 	}
 
 	public void testSyslogServerMainFailures() {
-		SyslogServerMain.Options options = null;
+		SyslogServerMain.Options options;
 
 		options = SyslogServerMain.parseOptions(new String[] { });
 		assertEquals("Must specify protocol",options.usage);

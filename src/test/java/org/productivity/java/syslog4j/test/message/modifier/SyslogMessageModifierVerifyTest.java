@@ -1,9 +1,9 @@
 package org.productivity.java.syslog4j.test.message.modifier;
 
-import java.util.Arrays;
+import static org.junit.Assert.assertArrayEquals;
 
+import java.util.Objects;
 import junit.framework.TestCase;
-
 import org.productivity.java.syslog4j.Syslog;
 import org.productivity.java.syslog4j.SyslogIF;
 import org.productivity.java.syslog4j.SyslogMessageModifierIF;
@@ -21,7 +21,7 @@ import org.productivity.java.syslog4j.util.Base64;
 
 public class SyslogMessageModifierVerifyTest extends TestCase {
 	public void testCRC32Verify() {
-		SyslogIF syslog = Syslog.getInstance("udp");
+		SyslogIF syslog = Objects.requireNonNull(Syslog.getInstance("udp"));
 		
 		ChecksumSyslogMessageModifier modifier = ChecksumSyslogMessageModifier.createCRC32();
 		
@@ -62,7 +62,7 @@ public class SyslogMessageModifierVerifyTest extends TestCase {
 	}
 
 	public void testAdler32Verify() {
-		SyslogIF syslog = Syslog.getInstance("udp");
+		SyslogIF syslog = Objects.requireNonNull(Syslog.getInstance("udp"));
 		
 		ChecksumSyslogMessageModifier modifier = ChecksumSyslogMessageModifier.createADLER32();
 		modifier.getConfig().setPrefix(" ");
@@ -76,7 +76,7 @@ public class SyslogMessageModifierVerifyTest extends TestCase {
 			fail();
 		}
 
-		if (!modifier.verify(message,2832271797l)) {
+		if (!modifier.verify(message, 2832271797L)) {
 			fail();
 		}
 
@@ -95,7 +95,7 @@ public class SyslogMessageModifierVerifyTest extends TestCase {
 		}
 
 		try {
-			modifier.verify(message,2832271797l);
+			modifier.verify(message, 2832271797L);
 			fail("Should throw an Exception");
 						
 		} catch (SyslogRuntimeException sre) {
@@ -104,7 +104,7 @@ public class SyslogMessageModifierVerifyTest extends TestCase {
 	}
 
 	public void testHashVerify() {
-		SyslogIF syslog = Syslog.getInstance("tcp");
+		SyslogIF syslog = Objects.requireNonNull(Syslog.getInstance("tcp"));
 		
 		HashSyslogMessageModifier modifier = HashSyslogMessageModifier.createMD5();
 		modifier.getConfig().setSuffix(null);
@@ -130,7 +130,7 @@ public class SyslogMessageModifierVerifyTest extends TestCase {
 	}
 
 	public void testMacVerify() {
-		SyslogIF syslog = Syslog.getInstance("udp");
+		SyslogIF syslog = Objects.requireNonNull(Syslog.getInstance("udp"));
 		
 		MacSyslogMessageModifier modifier = MacSyslogMessageModifier.createHmacMD5("fb7Jl0VGnzY5ehJCdeff7bSZ5Vk=");
 		modifier.getConfig().setPrefix(" ");
@@ -177,15 +177,15 @@ public class SyslogMessageModifierVerifyTest extends TestCase {
 		assertNull(AbstractSyslogMessageModifier.parseInlineModifier(" ",null,null));
 		
 		String[] data = AbstractSyslogMessageModifier.parseInlineModifier("xyz abc",null,null);
-		assertTrue(Arrays.equals(new String[] { "xyz", "abc" },data));
+        assertArrayEquals(new String[] {"xyz", "abc"}, data);
 
 		data = AbstractSyslogMessageModifier.parseInlineModifier("abc def","",null);
-		assertTrue(Arrays.equals(new String[] { "abc", "def" },data));
+        assertArrayEquals(new String[] {"abc", "def"}, data);
 
 		data = AbstractSyslogMessageModifier.parseInlineModifier("ghi jkl",null,"");
-		assertTrue(Arrays.equals(new String[] { "ghi", "jkl" },data));
+        assertArrayEquals(new String[] {"ghi", "jkl"}, data);
 
 		data = AbstractSyslogMessageModifier.parseInlineModifier("mno pqr","","");
-		assertTrue(Arrays.equals(new String[] { "mno", "pqr" },data));
+        assertArrayEquals(new String[] {"mno", "pqr"}, data);
 	}
 }

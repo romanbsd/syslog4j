@@ -28,7 +28,7 @@ import org.productivity.java.syslog4j.util.Base64;
 import org.productivity.java.syslog4j.util.SyslogUtility;
 
 public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
-	protected static int pause = 100;
+	protected static final int pause = 100;
 	
 	protected int getMessageCount() {
 		return -1;
@@ -55,14 +55,14 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 		
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
 		syslog.getConfig().removeAllMessageModifiers();
 		
-		ArrayList list = new ArrayList();
+		List<SyslogMessageModifierIF> list = new ArrayList<>();
 		((AbstractSyslogConfig) syslog.getConfig()).setMessageModifiers(list);
 		
 		// UPPER SET UP
@@ -96,8 +96,8 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 	public void testPrefixSuffix() {
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
@@ -212,8 +212,8 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 	public void testSequential() {
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
@@ -275,8 +275,8 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 		
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
@@ -339,8 +339,8 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 		
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
@@ -394,8 +394,8 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 			assertTrue(true);
 		}
 
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
@@ -437,7 +437,7 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 		
 		HashSyslogMessageModifierConfig hashConfig = HashSyslogMessageModifierConfig.createSHA256();
 		HashSyslogMessageModifier hash = new HashSyslogMessageModifier(hashConfig);
-		assertTrue(hashConfig == hash.getConfig());
+        assertSame(hashConfig, hash.getConfig());
 
 		syslog.getConfig().removeAllMessageModifiers();
 		syslog.getConfig().addMessageModifier(hash);
@@ -526,8 +526,8 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 	public void testMac() {
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
@@ -594,17 +594,15 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 	
 	protected Key createKey(String base64,String algorithm) {
 		byte[] keyBytes = Base64.decode(base64);
-		
-		Key key = new SecretKeySpec(keyBytes,algorithm);
-		
-		return key;
+
+        return new SecretKeySpec(keyBytes,algorithm);
 	}
 
 	public void testMacWithKeys() {
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);
@@ -680,8 +678,8 @@ public class SyslogMessageModifierTest extends AbstractNetSyslog4jTest {
 
 		// PREPARE
 		
-		List events = new ArrayList();
-		String message = null;
+		List<String> events = new ArrayList<>();
+		String message;
 		
 		String protocol = getClientProtocol();
 		SyslogIF syslog = getSyslog(protocol);

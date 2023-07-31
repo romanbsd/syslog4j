@@ -41,131 +41,114 @@ import junit.framework.TestCase;
 
 import org.productivity.java.syslog4j.impl.message.structured.StructuredSyslogMessage;
 
-public class StructuredSyslogMessageTest extends TestCase
-{
-   public void testFromString1()
-   {
-      final String messageStr = "msgId1 [0@0] my message!!";
+public class StructuredSyslogMessageTest extends TestCase {
+    public void testFromString1() {
+        final String messageStr = "msgId1 [0@0] my message!!";
 
-      final StructuredSyslogMessage message = StructuredSyslogMessage.fromString(messageStr);
-      
-      assertEquals("msgId1 [0@0] my message!!",message.toString());
-      assertEquals(-108931075,message.hashCode());
+        final StructuredSyslogMessage message = StructuredSyslogMessage.fromString(messageStr);
 
-      assertEquals("my message!!", message.getMessage());
-      assertEquals("msgId1", message.getMessageId());
-      assertTrue(message.getStructuredData().size() == 0);
-   }
+        assertEquals("msgId1 [0@0] my message!!", message.toString());
+        assertEquals(-108931075, message.hashCode());
 
-   public void testFromString2()
-   {
-      final String messageStr = "msgId1 [invalid SD] my message!!";
+        assertEquals("my message!!", message.getMessage());
+        assertEquals("msgId1", message.getMessageId());
+        assertEquals(0, message.getStructuredData().size());
+    }
 
-      try {
-    	  StructuredSyslogMessage.fromString(messageStr);
-    	  fail();
-    	  
-      } catch (IllegalArgumentException iae) {
-    	  //
-      }
-   }
+    public void testFromString2() {
+        final String messageStr = "msgId1 [invalid SD] my message!!";
 
-   public void testFromString3()
-   {
-      final String messageStr = "msgId1 [data1 a=b] my message!!";
+        try {
+            StructuredSyslogMessage.fromString(messageStr);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            //
+        }
+    }
 
-      try {
-	      StructuredSyslogMessage.fromString(messageStr);
-		  fail();
-		  
-	   } catch (IllegalArgumentException iae) {
-	 	  //
-	   }
-   }
+    public void testFromString3() {
+        final String messageStr = "msgId1 [data1 a=b] my message!!";
 
-   public void testFromString4()
-   {
-      final String messageStr = "msgId1 [data1 a=\"b] my message!!";
+        try {
+            StructuredSyslogMessage.fromString(messageStr);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            //
+        }
+    }
 
-      try {
-	      StructuredSyslogMessage.fromString(messageStr);
-		  fail();
-		  
-	   } catch (IllegalArgumentException iae) {
-	 	  //
-	   }
-   }
+    public void testFromString4() {
+        final String messageStr = "msgId1 [data1 a=\"b] my message!!";
 
-   public void testFromString5()
-   {
-      final String messageStr = "msgId1 [data1 a=b\"] my message!!";
+        try {
+            StructuredSyslogMessage.fromString(messageStr);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            //
+        }
+    }
 
-      try {
-    	  StructuredSyslogMessage.fromString(messageStr);
-    	  fail();
-    	  
-      } catch (IllegalArgumentException iae) {
-    	  //
-      }
+    public void testFromString5() {
+        final String messageStr = "msgId1 [data1 a=b\"] my message!!";
 
-   }
+        try {
+            StructuredSyslogMessage.fromString(messageStr);
+            fail();
+        } catch (IllegalArgumentException iae) {
+            //
+        }
+    }
 
-   public void testFromString6()
-   {
-      final String messageStr = "msgId1 [data1 a=\"b\"] my message!!";
+    public void testFromString6() {
+        final String messageStr = "msgId1 [data1 a=\"b\"] my message!!";
 
-      final StructuredSyslogMessage message = StructuredSyslogMessage.fromString(messageStr);
+        final StructuredSyslogMessage message = StructuredSyslogMessage.fromString(messageStr);
 
-      assertEquals("my message!!", message.getMessage());
-      assertEquals("msgId1", message.getMessageId());
-      assertTrue(message.getStructuredData().size() == 1);
-      assertTrue(((Map) message.getStructuredData().get("data1")).size() == 1);
-      assertEquals("b", ((Map) message.getStructuredData().get("data1")).get("a"));
-   }
+        assertEquals("my message!!", message.getMessage());
+        assertEquals("msgId1", message.getMessageId());
+        assertEquals(1, message.getStructuredData().size());
+        assertEquals(1, message.getStructuredData().get("data1").size());
+        assertEquals("b", message.getStructuredData().get("data1").get("a"));
+    }
 
-   public void testFromString7()
-   {
-      final String messageStr =
-            "msgId1 [data1 a=\"b\"][data2 a=\"b\" x1=\"c1\" n2=\"f5\"] my message!!";
+    public void testFromString7() {
+        final String messageStr =
+                "msgId1 [data1 a=\"b\"][data2 a=\"b\" x1=\"c1\" n2=\"f5\"] my message!!";
 
-      final StructuredSyslogMessage message = StructuredSyslogMessage.fromString(messageStr);
+        final StructuredSyslogMessage message = StructuredSyslogMessage.fromString(messageStr);
 
-      assertEquals("my message!!", message.getMessage());
-      assertEquals("msgId1", message.getMessageId());
-      assertTrue(message.getStructuredData().size() == 2);
-      assertTrue(((Map) message.getStructuredData().get("data1")).size() == 1);
-      assertTrue(((Map) message.getStructuredData().get("data2")).size() == 3);
-      assertEquals("b", ((Map) message.getStructuredData().get("data1")).get("a"));
-      assertEquals("b", ((Map) message.getStructuredData().get("data2")).get("a"));
-      assertEquals("c1", ((Map) message.getStructuredData().get("data2")).get("x1"));
-      assertEquals("f5", ((Map) message.getStructuredData().get("data2")).get("n2"));
-   }
+        assertEquals("my message!!", message.getMessage());
+        assertEquals("msgId1", message.getMessageId());
+        assertEquals(2, message.getStructuredData().size());
+        assertEquals(1, message.getStructuredData().get("data1").size());
+        assertEquals(3, message.getStructuredData().get("data2").size());
+        assertEquals("b", message.getStructuredData().get("data1").get("a"));
+        assertEquals("b", message.getStructuredData().get("data2").get("a"));
+        assertEquals("c1", message.getStructuredData().get("data2").get("x1"));
+        assertEquals("f5", message.getStructuredData().get("data2").get("n2"));
+    }
 
-   public void testCreateMessage1()
-   {
-      final StructuredSyslogMessage message = new StructuredSyslogMessage("msgId", null, null);
-      assertEquals("msgId [0@0]", message.createMessage());
-   }
+    public void testCreateMessage1() {
+        final StructuredSyslogMessage message = new StructuredSyslogMessage("msgId", null, null);
+        assertEquals("msgId [0@0]", message.createMessage());
+    }
 
-   public void testCreateMessage2()
-   {
-      final StructuredSyslogMessage message =
-            new StructuredSyslogMessage("msgId", null, "my message");
-      assertEquals("msgId [0@0] my message", message.createMessage());
-   }
+    public void testCreateMessage2() {
+        final StructuredSyslogMessage message =
+                new StructuredSyslogMessage("msgId", null, "my message");
+        assertEquals("msgId [0@0] my message", message.createMessage());
+    }
 
-   public void testCreateMessage3()
-   {
-      final StructuredSyslogMessage message =
-            new StructuredSyslogMessage("msgId", new HashMap(), "my message");
-      assertEquals("msgId [0@0] my message", message.createMessage());
-   }
+    public void testCreateMessage3() {
+        final StructuredSyslogMessage message =
+                new StructuredSyslogMessage("msgId", new HashMap<>(), "my message");
+        assertEquals("msgId [0@0] my message", message.createMessage());
+    }
 
-   public void testCreateMessage4()
-   {
-      final Map map = new HashMap();
-      final StructuredSyslogMessage message =
-            new StructuredSyslogMessage("msgId", map, "my message");
-      assertEquals("msgId [0@0] my message", message.createMessage());
-   }
+    public void testCreateMessage4() {
+        final Map<String, Map<String, String>> map = new HashMap<>();
+        final StructuredSyslogMessage message =
+                new StructuredSyslogMessage("msgId", map, "my message");
+        assertEquals("msgId [0@0] my message", message.createMessage());
+    }
 }

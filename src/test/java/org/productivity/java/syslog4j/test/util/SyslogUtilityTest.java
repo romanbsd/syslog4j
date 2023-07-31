@@ -9,8 +9,6 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
 
 public class SyslogUtilityTest extends TestCase {
 	public static class CharSet implements SyslogCharSetIF {
-		private static final long serialVersionUID = 130052445223551802L;
-		
 		protected String charSet = null;
 
 		public String getCharSet() {

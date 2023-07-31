@@ -17,4 +17,15 @@ java {
 dependencies {
     implementation 'commons-pool:commons-pool:1.6'
     implementation 'net.java.dev.jna:jna-platform:4.3.0'
+    testImplementation('junit:junit:4.13.2')
+}
+
+testing {
+    suites {
+        // Configure the built-in test suite
+        test {
+            // Use JUnit4 test framework
+            useJUnit('4.13.2')
+        }
+    }
 }

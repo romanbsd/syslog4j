@@ -14,8 +14,6 @@ import org.productivity.java.syslog4j.server.impl.net.udp.UDPNetSyslogServerConf
 
 public class SyslogCreateAndDestroyTest extends TestCase {
 	public static class FakeMessageProcessor implements SyslogMessageProcessorIF {
-		private static final long serialVersionUID = -2118511880575127720L;
-
 		public byte[] createPacketData(byte[] header, byte[] message, int start, int length) {
 			return null;
 		}

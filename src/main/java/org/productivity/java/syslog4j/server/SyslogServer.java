@@ -134,9 +134,9 @@ public class SyslogServer implements SyslogConstants {
 			}
 			
 			try {
-				Class<?> syslogClass = config.getSyslogServerClass();
+				Class<? extends SyslogServerIF> syslogClass = config.getSyslogServerClass();
 				
-				syslogServer = (SyslogServerIF) syslogClass.getDeclaredConstructor().newInstance();
+				syslogServer = syslogClass.getDeclaredConstructor().newInstance();
 				
 			} catch (ReflectiveOperationException cse) {
 				throw new SyslogRuntimeException(cse);

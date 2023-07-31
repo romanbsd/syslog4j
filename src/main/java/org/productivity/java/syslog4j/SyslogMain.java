@@ -19,7 +19,7 @@ import org.productivity.java.syslog4j.util.SyslogUtility;
  * @version $Id: SyslogMain.java,v 1.4 2010/11/28 01:38:08 cvs Exp $
  */
 public class SyslogMain {
-	public static final boolean CALL_SYSTEM_EXIT_ON_FAILURE = true;
+	public static boolean CALL_SYSTEM_EXIT_ON_FAILURE = true;
 	
 	public static class Options {
 		public String host = null;

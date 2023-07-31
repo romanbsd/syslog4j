@@ -44,7 +44,7 @@ public class UnixSocketSyslog extends AbstractSyslog {
 
 		@Override
 		protected List<String> getFieldOrder() {
-			return Arrays.asList("sa_family", "sa_data");
+			return Arrays.asList("sun_family", "sun_path");
 		}
 	}
 	
